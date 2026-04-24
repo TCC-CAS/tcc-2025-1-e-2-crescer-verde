@@ -71,7 +71,7 @@ async function loadCourseDetails() {
 async function loadContentsAndProgress() {
   const token = localStorage.getItem("token");
   try {
-    const contentRes = await fetch(`/api/courseContents/listByCourseId/${currentCourseId}`, {
+    const contentRes = await fetch(`${API_BASE}/api/courseContents/listByCourseId/${currentCourseId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` }
     });
@@ -381,7 +381,7 @@ async function handleContentSubmit(e) {
 
   const token = localStorage.getItem("token");
   const url = id
-    ? `/api/courseContents/update/${id}`
+    ? `${API_BASE}/api/courseContents/update/${id}`
     : API_BASE + "/api/courseContents/create";
 
   try {
@@ -410,7 +410,7 @@ window.deleteContent = async function () {
 
   const token = localStorage.getItem("token");
   try {
-    const res = await fetch(`/api/courseContents/delete/${id}`, {
+    const res = await fetch(`${API_BASE}/api/courseContents/delete/${id}`, {
       method: "POST",
       headers: { "Authorization": `Bearer ${token}` }
     });

@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         // Buscar certificados do usuário
-        const certRes = await fetch(`/api/certificates/user/${currentUser.id}`);
+        const certRes = await fetch(`${API_BASE}/api/certificates/user/${currentUser.id}`);
         if (certRes.ok) {
             certificates = await certRes.json();
             const container = document.getElementById("certificates-container");
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 window.printCertificate = async function (certificateId) {
     console.log("procurando por certificado: " + certificateId);
-    var certRes = await fetch(`/api/certificates/${certificateId}`);
+    var certRes = await fetch(`${API_BASE}/api/certificates/${certificateId}`);
 
     if (!certRes.ok) {
         alert("Certificado não encontrado");

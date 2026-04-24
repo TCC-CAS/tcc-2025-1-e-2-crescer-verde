@@ -91,7 +91,7 @@ window.deleteCourse = async function () {
   if (!token) return alert("Usuário não autenticado.");
 
   try {
-    const response = await fetch(`/api/courses/${courseId}`, {
+    const response = await fetch(`${API_BASE}/api/courses/${courseId}`, {
       method: "DELETE",
       headers: {
         "Authorization": `Bearer ${token}`
