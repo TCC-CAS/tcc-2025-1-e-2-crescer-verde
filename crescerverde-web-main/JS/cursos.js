@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       try {
-        const url = courseId ? `/api/courses/${courseId}` : API_BASE + "/api/courses";
+        const url = courseId ? `${API_BASE}/api/courses/${courseId}` : API_BASE + "/api/courses";
         const method = courseId ? "PUT" : "POST";
 
         const response = await fetch(url, {
