@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Certificado de Conclusão</title>
+    <style>
+      body {
+        font-family: "Georgia", serif;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .certificate-container {
+        width: 800px;
+        padding: 40px;
+        background-color: white;
+        border: 15px solid #1a2a6c;
+        outline: 5px solid #b21f1f;
+        outline-offset: -25px;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .header {
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        color: #1a2a6c;
+        margin-bottom: 20px;
+      }
+
+      .title {
+        font-size: 48px;
+        font-weight: bold;
+        margin: 10px 0;
+        color: #333;
+      }
+
+      .subtitle {
+        font-size: 18px;
+        font-style: italic;
+        color: #666;
+        margin-bottom: 40px;
+      }
+
+      .student-name {
+        font-size: 36px;
+        font-weight: bold;
+        color: #b21f1f;
+        border-bottom: 2px solid #ccc;
+        display: inline-block;
+        padding: 0 50px;
+        margin: 20px 0;
+      }
+
+      .course-info {
+        font-size: 20px;
+        line-height: 1.6;
+        margin: 30px auto;
+        width: 80%;
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 60px;
+      }
+
+      .signature-box {
+        width: 200px;
+        border-top: 1px solid #333;
+        padding-top: 10px;
+        font-size: 14px;
+      }
+
+      .seal {
+        position: absolute;
+        bottom: 40px;
+        right: 40px;
+        width: 80px;
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="certificate-container">
+      <div class="header">Certificado de Conclusão</div>
+
+      <div class="title">Certificado</div>
+
+      <div class="subtitle">
+        Este certificado é orgulhosamente apresentado a:
+      </div>
+
+      <div class="student-name">[NOME_ALUNO]</div>
+
+      <div class="course-info">
+        Pela conclusão com êxito do curso de <strong>[NOME_CURSO]</strong>,
+        realizado em <strong>[DATA_CONCLUSAO]</strong>.
+      </div>
+
+      <div class="footer">
+        <div class="signature-box">
+          <strong>Coordenador do Curso</strong><br />
+          Instituição de Ensino
+        </div>
+      </div>
+
+      <div class="seal">
+        <svg viewBox="0 0 100 100" fill="#fbc02d">
+          <circle cx="50" cy="50" r="45" stroke="#d4af37" stroke-width="2" />
+          <text
+            x="50%"
+            y="55%"
+            text-anchor="middle"
+            fill="#5d4037"
+            font-size="12"
+            font-weight="bold"
+          >
+            SELO DE QUALIDADE
+          </text>
+        </svg>
+      </div>
+    </div>
+  </body>
+</html>

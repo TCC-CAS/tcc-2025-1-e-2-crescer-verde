@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="1200" height="480">
+  <defs>
+    <linearGradient id="bgQ" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1b5e20"/>
+      <stop offset="100%" style="stop-color:#27ae60"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.18"/>
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.06"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="480" fill="url(#bgQ)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="1100" cy="80"  r="160" fill="#2ecc71" opacity="0.08"/>
+  <circle cx="1050" cy="400" r="120" fill="#2ecc71" opacity="0.07"/>
+  <circle cx="100"  cy="420" r="140" fill="#1a5c2e"  opacity="0.15"/>
+  <circle cx="180"  cy="60"  r="90"  fill="#2ecc71" opacity="0.07"/>
+
+  <!-- Left accent leaves -->
+  <ellipse cx="60" cy="200" rx="80" ry="30" fill="#2ecc71" opacity="0.15" transform="rotate(-40,60,200)"/>
+  <ellipse cx="30" cy="280" rx="70" ry="25" fill="#2ecc71" opacity="0.12" transform="rotate(-55,30,280)"/>
+
+  <!-- Right accent leaves -->
+  <ellipse cx="1160" cy="200" rx="80" ry="30" fill="#2ecc71" opacity="0.12" transform="rotate(40,1160,200)"/>
+  <ellipse cx="1180" cy="310" rx="65" ry="22" fill="#2ecc71" opacity="0.1"  transform="rotate(55,1180,310)"/>
+
+  <!-- Header badge -->
+  <rect x="300" y="28" width="600" height="68" rx="34" fill="#ffffff" opacity="0.1" filter="url(#shadow)"/>
+  <text x="600" y="73" text-anchor="middle"
+    font-family="Arial Black, Arial, sans-serif"
+    font-size="38" font-weight="900" letter-spacing="2"
+    fill="#ffffff">
+    QUIZ: FAZ BEM PARA O PLANETA? 🌍
+  </text>
+
+  <!-- Question cards (4 answers, styled like options, no score) -->
+  <!-- Card 1 -->
+  <rect x="100" y="120" width="470" height="64" rx="18" fill="url(#cardGrad)" stroke="#2ecc71" stroke-width="1.5" filter="url(#shadow)"/>
+  <circle cx="140" cy="152" r="18" fill="#2ecc71" opacity="0.3"/>
+  <text x="140" y="157" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#a5d6a7">A</text>
+  <text x="175" y="157" font-family="Arial, sans-serif" font-size="18" fill="#ffffff">Jogar lixo no chão é errado ✓</text>
+
+  <!-- Card 2 -->
+  <rect x="100" y="198" width="470" height="64" rx="18" fill="url(#cardGrad)" stroke="#2ecc71" stroke-width="1.5" filter="url(#shadow)"/>
+  <circle cx="140" cy="230" r="18" fill="#2ecc71" opacity="0.3"/>
+  <text x="140" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#a5d6a7">B</text>
+  <text x="175" y="235" font-family="Arial, sans-serif" font-size="18" fill="#ffffff">Banhos longos desperdiçam água</text>
+
+  <!-- Card 3 -->
+  <rect x="100" y="276" width="470" height="64" rx="18" fill="url(#cardGrad)" stroke="#2ecc71" stroke-width="1.5" filter="url(#shadow)"/>
+  <circle cx="140" cy="308" r="18" fill="#2ecc71" opacity="0.3"/>
+  <text x="140" y="313" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#a5d6a7">C</text>
+  <text x="175" y="313" font-family="Arial, sans-serif" font-size="18" fill="#ffffff">Luz acesa sem uso gasta energia</text>
+
+  <!-- Card 4 -->
+  <rect x="100" y="354" width="470" height="64" rx="18" fill="url(#cardGrad)" stroke="#2ecc71" stroke-width="1.5" filter="url(#shadow)"/>
+  <circle cx="140" cy="386" r="18" fill="#2ecc71" opacity="0.3"/>
+  <text x="140" y="391" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#a5d6a7">D</text>
+  <text x="175" y="391" font-family="Arial, sans-serif" font-size="18" fill="#ffffff">Sacolas plásticas poluem o mar</text>
+
+  <!-- Right panel — CTA -->
+  <rect x="640" y="115" width="470" height="310" rx="24" fill="#ffffff" opacity="0.07" filter="url(#shadow)"/>
+
+  <!-- Big question mark -->
+  <text x="880" y="265" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="140" fill="#2ecc71" opacity="0.18">?</text>
+
+  <!-- CTA text -->
+  <text x="878" y="180" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="32" font-weight="900" fill="#ffffff">TESTE SEU</text>
+  <text x="878" y="224" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="32" font-weight="900" fill="#a5d6a7">CONHECIMENTO!</text>
+  <line x1="700" y1="242" x2="1056" y2="242" stroke="#2ecc71" stroke-width="2" opacity="0.5"/>
+  <text x="878" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#e8f5e9" opacity="0.85">3 perguntas sobre sustentabilidade</text>
+  <text x="878" y="318" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#e8f5e9" opacity="0.85">Aprenda enquanto joga!</text>
+
+  <!-- Play button -->
+  <rect x="770" y="345" width="216" height="52" rx="26" fill="#2ecc71" filter="url(#shadow)"/>
+  <text x="878" y="379" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="20" font-weight="900" fill="#1b5e20" letter-spacing="1">▶  JOGAR AGORA</text>
+
+  <!-- Brand bottom -->
+  <text x="600" y="458" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="3" fill="#ecf0f1" opacity="0.6">@crescerverde</text>
+</svg>

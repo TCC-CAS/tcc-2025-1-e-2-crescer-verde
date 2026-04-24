@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+main.container {
+  background: linear-gradient(135deg, #1b5e20, #4caf50);
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  box-shadow:
+    0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.table {
+  --bs-table-bg: transparent;
+  --bs-table-hover-bg: #f8fcf9;
+}
+
+.table td,
+.table th {
+  padding: 1rem 0.5rem;
+  vertical-align: middle;
+}
+
+td .badge {
+  font-size: 0.85em;
+  padding: 0.4em 0.8em;
+}
+
+.bg-light-success {
+  background-color: #0d47a1;
+  color: #ffffff;
+}
+
+.bg-light-secondary {
+  background-color: #424242;
+  color: #ffffff;
+}
+
+.action-btn {
+  width: 35px;
+  height: 35px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+}
+
+.modal-content {
+  background: #ffffff;
+}
+
+.form-control:focus,
+.form-select:focus {
+  box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25);
+  border-color: #4caf50;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}

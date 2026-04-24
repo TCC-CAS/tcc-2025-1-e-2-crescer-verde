@@ -1,0 +1,101 @@
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/* ── Typography scale (3 levels only) ── */
+h1 { font-size: 2.4rem;  font-weight: 700; margin: 0 0 0.4em; }
+h2 { font-size: 1.6rem;  font-weight: 600; margin: 0 0 0.3em; }
+h3, h4, h5, h6 { font-size: 1.2rem; font-weight: 600; margin: 0 0 0.25em; }
+p, li, label, td, th { font-size: 1.05rem; line-height: 1.6; }
+small, .text-sm { font-size: 0.92rem; }
+
+body {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-image: url(../Imagens/fundo.jpg);
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* ensures all children fill full width consistently across browsers */
+  min-height: 100vh;
+}
+
+nav {
+  background-color: #2c3e50; /* Agora a cor de fundo do cabeçalho é a mesma do rodapé */
+  color: #ecf0f1; /* Cor de texto no cabeçalho */
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+main {
+  width: 90%;
+  max-width: 1200px;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+a.nav-link {
+  text-decoration: none;
+  color: #ecf0f1;
+  padding: 1em;
+  margin: 0 10px;
+  font-size: 1.15rem;
+}
+
+.hero {
+  text-align: center;
+  padding: 1em;
+  background-color: #27ae60;
+  color: #ecf0f1;
+}
+
+.hero h1 { font-size: 2.4rem; }
+.hero h2 { font-size: 1.2rem; font-weight: 400; opacity: 0.88; }
+
+.hero2 {
+  text-align: center;
+  padding: 1em;
+  background-color: #27ae60;
+  color: #ecf0f1;
+}
+
+.hero2 p { font-size: 1.15rem; margin: 0 0 0.75em; }
+
+.cta-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  text-decoration: none;
+  color: #ecf0f1; /* Cor do texto do botão */
+  background-color: #3498db; /* Cor de fundo do botão */
+  border-radius: 5px;
+}
+
+footer {
+  text-align: center;
+  padding: 1em;
+  background-color: #2c3e50; /* Verde escuro para o rodapé */
+  color: #ecf0f1; /* Cor de texto no rodapé */
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  margin-top: auto; /* Empurra o rodapé para o final da página */
+}
+
+#carouselExampleAutoplaying .quiz-slide,
+#carouselExampleAutoplaying .quiz-slide > div {
+  height: 480px;
+}

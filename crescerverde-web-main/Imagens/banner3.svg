@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="1200" height="480">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a5c2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#27ae60;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="480" fill="url(#bgGrad)" />
+
+  <!-- Soft glow circles -->
+  <circle cx="180" cy="120" r="200" fill="#2ecc71" opacity="0.06" />
+  <circle cx="1050" cy="380" r="180" fill="#1a5c2e" opacity="0.18" />
+  <circle cx="1100" cy="100" r="120" fill="#2ecc71" opacity="0.05" />
+
+  <!-- Leaf accents left -->
+  <ellipse cx="55" cy="230" rx="110" ry="42" fill="#2ecc71" opacity="0.10" transform="rotate(-38,55,230)" />
+  <ellipse cx="25" cy="310" rx="80" ry="30" fill="#2ecc71" opacity="0.08" transform="rotate(-52,25,310)" />
+
+  <!-- Leaf accents right -->
+  <ellipse cx="1155" cy="230" rx="110" ry="42" fill="#2ecc71" opacity="0.09" transform="rotate(38,1155,230)" />
+  <ellipse cx="1175" cy="150" rx="80" ry="30" fill="#2ecc71" opacity="0.07" transform="rotate(52,1175,150)" />
+
+  <!-- Stars -->
+  <polygon points="950,80 955,95 970,95 958,104 963,119 950,110 937,119 942,104 930,95 945,95" fill="#f1c40f" opacity="0.5" />
+  <polygon points="248,60 251,69 261,69 253,75 256,84 248,78 240,84 243,75 235,69 245,69" fill="#f1c40f" opacity="0.45" />
+
+  <!-- Main title -->
+  <text x="600" y="185" text-anchor="middle"
+    font-family="Arial Black, Arial, sans-serif"
+    font-size="52" font-weight="900" letter-spacing="1"
+    fill="#ffffff">
+    JOGOS DE SUSTENTABILIDADE
+  </text>
+
+  <!-- Subtitle — two lines, no dash -->
+  <text x="600" y="238" text-anchor="middle"
+    font-family="Arial, sans-serif"
+    font-size="24" font-weight="400" letter-spacing="0"
+    fill="#a8e6c1" opacity="0.95">
+    Aprenda cuidando do planeta.
+  </text>
+  <text x="600" y="268" text-anchor="middle"
+    font-family="Arial, sans-serif"
+    font-size="24" font-weight="400" letter-spacing="0"
+    fill="#a8e6c1" opacity="0.85">
+    Divirta-se fazendo isso!
+  </text>
+
+  <!-- Divider line -->
+  <line x1="440" y1="295" x2="760" y2="295" stroke="#2ecc71" stroke-width="2" opacity="0.5" />
+
+  <!-- Brand tag -->
+  <text x="600" y="336" text-anchor="middle"
+    font-family="Arial, sans-serif"
+    font-size="19" font-weight="700" letter-spacing="3"
+    fill="#ecf0f1" opacity="0.75">
+    @crescerverde
+  </text>
+
+  <!-- Bottom badge — solid border, clear text -->
+  <rect x="462" y="365" width="276" height="46" rx="23" fill="#2ecc71" opacity="0.22" />
+  <rect x="462" y="365" width="276" height="46" rx="23" fill="none" stroke="#2ecc71" stroke-width="1.5" opacity="0.55" />
+  <text x="600" y="394" text-anchor="middle"
+    font-family="Arial, sans-serif"
+    font-size="16" font-weight="700" letter-spacing="2"
+    fill="#ffffff" opacity="0.90">
+    100% EDUCATIVO &amp; VERDE
+  </text>
+</svg>

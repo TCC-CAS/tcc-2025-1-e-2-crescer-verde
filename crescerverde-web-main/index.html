@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="/Imagens/EarthPNG.png"
+      sizes="16x16"
+      type="image/png"
+    />
+    <title>Plataforma de Jogos de Sustentabilidade Infantil</title>
+    <link rel="stylesheet" href="/CSS/styles.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <a href="/index.html" class="navbar-brand">
+        <img src="../Imagens/logo.png" alt="Logo" style="width: 220px" />
+      </a>
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/HTML/jogos.html">Jogos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/HTML/certificados.html">Certificados</a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="/HTML/usuarios.html"
+            id="nav-usuarios"
+            style="display: none"
+            >Usuários</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/HTML/login.html" id="nav-login">Login</a>
+        </li>
+      </ul>
+    </nav>
+
+    <section class="hero">
+      <h1>
+        Bem-vindo à Plataforma de Jogos de Sustentabilidade
+      </h1>
+      <h2>(Para Crianças e Jovens)</h2>
+    </section>
+    <div
+      id="carouselExampleAutoplaying"
+      class="carousel slide"
+      data-bs-ride="carousel"
+    >
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="../Imagens/1.png" class="d-block w-100" alt="Slide 1" />
+        </div>
+        <div class="carousel-item">
+          <img src="../Imagens/2.png" class="d-block w-100" alt="Slide 2" />
+        </div>
+        <div class="carousel-item">
+          <img src="../Imagens/MiniGame1.svg" class="d-block w-100" alt="MiniGame 1 - Coleta Seletiva" />
+        </div>
+        <div class="carousel-item">
+          <img src="../Imagens/banner3.svg" class="d-block w-100" alt="Jogos de Sustentabilidade" />
+        </div>
+
+        <!-- Interactive Quiz Slide -->
+        <div class="carousel-item quiz-slide" data-bs-interval="false" id="quiz-carousel-slide">
+          <div id="quiz-container" style="
+            background: linear-gradient(135deg, #1b5e20 0%, #27ae60 100%);
+            width: 100%;
+            min-height: 480px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            position: relative;
+            overflow: hidden;
+          ">
+            <div style="position:absolute;width:260px;height:260px;border-radius:50%;background:#2ecc71;opacity:0.08;top:-60px;right:-40px;pointer-events:none;"></div>
+            <div style="position:absolute;width:200px;height:200px;border-radius:50%;background:#2ecc71;opacity:0.07;bottom:-60px;left:-40px;pointer-events:none;"></div>
+
+            <div id="quiz-inner" style="width:100%;max-width:820px;padding:32px 24px;position:relative;z-index:2;">
+              <!-- START SCREEN -->
+              <div id="quiz-start" style="display:block;text-align:center;">
+                <div style="font-size:64px;margin-bottom:12px;">🌍</div>
+                <h2 style="color:#fff;font-size:2rem;font-weight:900;margin:0 0 10px;">Quiz de Sustentabilidade</h2>
+                <p style="color:#a5d6a7;font-size:1.1rem;margin:0 auto 28px;max-width:480px;line-height:1.5;">3 perguntas, 15 segundos cada. Você consegue acertar tudo? Teste seus conhecimentos sobre o meio ambiente!</p>
+                <button onclick="quizStart()" style="background:#2ecc71;color:#1b5e20;border:none;padding:14px 44px;border-radius:26px;font-size:1.2rem;font-weight:900;cursor:pointer;letter-spacing:0.5px;">▶ Iniciar Quiz</button>
+              </div>
+
+              <!-- QUESTION SCREEN -->
+              <div id="quiz-question" style="display:none;">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                  <div style="flex:1;height:8px;background:rgba(255,255,255,0.2);border-radius:4px;overflow:hidden;">
+                    <div id="quiz-progress-bar" style="height:100%;background:#2ecc71;border-radius:4px;transition:width 0.4s ease;width:0%;"></div>
+                  </div>
+                  <span id="quiz-counter" style="color:#a5d6a7;font-size:0.95rem;white-space:nowrap;font-weight:700;"></span>
+                </div>
+                <div style="text-align:center;margin-bottom:8px;">
+                  <span style="background:rgba(255,255,255,0.15);color:#fff;padding:4px 18px;border-radius:20px;font-size:1rem;font-weight:700;">⏱ <span id="quiz-timer-val">30</span>s</span>
+                </div>
+                <div style="height:5px;background:rgba(255,255,255,0.15);border-radius:3px;margin-bottom:18px;overflow:hidden;">
+                  <div id="quiz-timer-bar" style="height:100%;background:#f9a825;border-radius:3px;width:100%;transition:width 1s linear;"></div>
+                </div>
+                <h3 id="quiz-q-text" style="color:#fff;font-size:1.4rem;font-weight:800;text-align:center;margin-bottom:20px;line-height:1.4;min-height:52px;"></h3>
+                <div id="quiz-options" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;"></div>
+              </div>
+
+              <!-- FEEDBACK -->
+              <div id="quiz-feedback" style="display:none;text-align:center;">
+                <div id="quiz-feedback-icon" style="font-size:64px;margin-bottom:8px;"></div>
+                <h3 id="quiz-feedback-title" style="color:#fff;font-size:1.7rem;font-weight:900;margin:0 0 8px;"></h3>
+                <p id="quiz-feedback-text" style="color:#a5d6a7;font-size:1.05rem;margin:0 auto 22px;line-height:1.5;max-width:560px;"></p>
+                <button onclick="quizNext()" style="background:#2ecc71;color:#1b5e20;border:none;padding:12px 36px;border-radius:24px;font-size:1.1rem;font-weight:900;cursor:pointer;">Próxima →</button>
+              </div>
+
+              <!-- RESULTS -->
+              <div id="quiz-result" style="display:none;text-align:center;">
+                <div id="quiz-result-emoji" style="font-size:72px;margin-bottom:8px;"></div>
+                <h2 id="quiz-result-title" style="color:#fff;font-size:2rem;font-weight:900;margin:0 0 8px;"></h2>
+                <p id="quiz-result-msg" style="color:#a5d6a7;font-size:1.1rem;margin:0 0 6px;"></p>
+                <p id="quiz-result-score" style="color:#f9a825;font-size:1.6rem;font-weight:900;margin:0 0 24px;"></p>
+                <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+                  <button onclick="quizRestart()" style="background:#2ecc71;color:#1b5e20;border:none;padding:12px 32px;border-radius:24px;font-size:1rem;font-weight:900;cursor:pointer;">🔄 Jogar Novamente</button>
+                  <button onclick="quizClose()" style="background:rgba(255,255,255,0.15);color:#fff;border:none;padding:12px 32px;border-radius:24px;font-size:1rem;font-weight:700;cursor:pointer;">← Voltar ao Carrossel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Quiz Slide -->
+      </div>
+
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleAutoplaying"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleAutoplaying"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <div class="hero2">
+      <p>
+        Descubra uma maneira divertida e educativa de aprender sobre
+        sustentabilidade.
+      </p>
+      <a href="/HTML/jogos.html" class="cta-button">Explorar Jogos</a>
+    </div>
+    <footer>
+      <p>&copy; 2026 Plataforma de Jogos de Sustentabilidade Infantil</p>
+      <p style="font-size: 0.8rem; opacity: 0.65; margin-top: 4px;">
+        <a href="#" data-terms-tab="uso" style="color: #a5d6a7; text-decoration: none;">Termos de Uso</a>
+        &nbsp;&middot;&nbsp;
+        <a href="#" data-terms-tab="privacidade" style="color: #a5d6a7; text-decoration: none;">Pol&iacute;tica de Privacidade</a>
+        &nbsp;&middot;&nbsp;
+        <a href="#" data-terms-tab="acessibilidade" style="color: #a5d6a7; text-decoration: none;">Acessibilidade</a>
+      </p>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+    <script src="../JS/config.js"></script>
+    <script src="../JS/global.js"></script>
+
+    <script src="/JS/auth-sync.js"></script>
+    <script src="/JS/terms-modal.js"></script>
+    <script>
+      // ── Quiz Logic ──────────────────────────────────────────────
+      const QUIZ_QUESTIONS = [
+        {
+          q: "O que devemos fazer com o lixo reciclável?",
+          options: [
+            "Jogar no lixo comum",
+            "Separar e colocar na coleta seletiva ♻️",
+            "Enterrar no jardim",
+            "Queimar no quintal"
+          ],
+          correct: 1,
+          feedback: "Separar o lixo reciclável e colocar na coleta seletiva ajuda a reduzir o desperdício e proteger o meio ambiente!"
+        },
+        {
+          q: "Qual dessas atitudes economiza mais água no dia a dia?",
+          options: [
+            "Tomar banhos muito longos",
+            "Deixar a torneira aberta ao escovar os dentes",
+            "Fechar a torneira enquanto ensaboa a louça 💧",
+            "Lavar o carro com mangueira todos os dias"
+          ],
+          correct: 2,
+          feedback: "Fechar a torneira enquanto ensaboa economiza até 20 litros de água por vez. Pequenos gestos fazem grande diferença!"
+        },
+        {
+          q: "Por que plantar árvores é importante para o planeta?",
+          options: [
+            "Apenas para deixar o jardim bonito",
+            "Árvores absorvem CO₂ e produzem oxigênio 🌳",
+            "Para aumentar o preço dos terrenos",
+            "Não faz diferença para o clima"
+          ],
+          correct: 1,
+          feedback: "As árvores são os pulmões do planeta! Elas absorvem dióxido de carbono e liberam oxigênio, ajudando a combater as mudanças climáticas."
+        }
+      ];
+
+      let quizCurrent = 0;
+      let quizScore = 0;
+      let quizTimer = null;
+      let quizTimeLeft = 30;
+      let quizAnswered = false;
+      const QUIZ_TIME = 30;
+
+      function quizShow(id) {
+        ["quiz-start","quiz-question","quiz-feedback","quiz-result"].forEach(s => {
+          document.getElementById(s).style.display = "none";
+        });
+        document.getElementById(id).style.display = "block";
+      }
+
+      function quizStart() {
+        quizCurrent = 0;
+        quizScore = 0;
+        quizPauseCarousel();
+        quizShowQuestion();
+      }
+
+      function quizPauseCarousel() {
+        const el = document.getElementById("carouselExampleAutoplaying");
+        const c = bootstrap.Carousel.getInstance(el) || new bootstrap.Carousel(el, { interval: false });
+        c.pause();
+        el.setAttribute("data-bs-interval", "false");
+      }
+
+      function quizResumeCarousel() {
+        const el = document.getElementById("carouselExampleAutoplaying");
+        el.removeAttribute("data-bs-interval");
+        const c = bootstrap.Carousel.getInstance(el) || new bootstrap.Carousel(el);
+        c.cycle();
+      }
+
+      function quizShowQuestion() {
+        const q = QUIZ_QUESTIONS[quizCurrent];
+        quizAnswered = false;
+
+        document.getElementById("quiz-counter").textContent = `Pergunta ${quizCurrent + 1} / ${QUIZ_QUESTIONS.length}`;
+        document.getElementById("quiz-progress-bar").style.width = ((quizCurrent / QUIZ_QUESTIONS.length) * 100) + "%";
+        document.getElementById("quiz-q-text").textContent = q.q;
+
+        const opts = document.getElementById("quiz-options");
+        opts.innerHTML = "";
+        q.options.forEach((opt, i) => {
+          const btn = document.createElement("button");
+          btn.id = "quiz-opt-" + i;
+          btn.textContent = opt;
+          btn.style.cssText = `
+            background: rgba(255,255,255,0.14);
+            color: #fff;
+            border: 2px solid rgba(255,255,255,0.25);
+            padding: 14px 16px;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.15s, border-color 0.15s;
+            width: 100%;
+          `;
+          btn.onmouseover = () => { if(!quizAnswered) btn.style.background = "rgba(46,204,113,0.25)"; };
+          btn.onmouseout  = () => { if(!quizAnswered) btn.style.background = "rgba(255,255,255,0.14)"; };
+          btn.onclick = () => quizAnswer(i);
+          opts.appendChild(btn);
+        });
+
+        quizStartTimer();
+        quizShow("quiz-question");
+      }
+
+      function quizStartTimer() {
+        clearInterval(quizTimer);
+        quizTimeLeft = QUIZ_TIME;
+        document.getElementById("quiz-timer-val").textContent = quizTimeLeft;
+        document.getElementById("quiz-timer-bar").style.transition = "none";
+        document.getElementById("quiz-timer-bar").style.width = "100%";
+        setTimeout(() => {
+          document.getElementById("quiz-timer-bar").style.transition = "width " + QUIZ_TIME + "s linear";
+          document.getElementById("quiz-timer-bar").style.width = "0%";
+        }, 50);
+
+        quizTimer = setInterval(() => {
+          quizTimeLeft--;
+          document.getElementById("quiz-timer-val").textContent = quizTimeLeft;
+          if (quizTimeLeft <= 0) {
+            clearInterval(quizTimer);
+            if (!quizAnswered) quizAnswer(-1);
+          }
+        }, 1000);
+      }
+
+      function quizAnswer(chosen) {
+        if (quizAnswered) return;
+        quizAnswered = true;
+        clearInterval(quizTimer);
+
+        const q = QUIZ_QUESTIONS[quizCurrent];
+        const correct = q.correct;
+        const isCorrect = chosen === correct;
+        if (isCorrect) quizScore++;
+
+        // Color the buttons
+        for (let i = 0; i < q.options.length; i++) {
+          const b = document.getElementById("quiz-opt-" + i);
+          if (!b) continue;
+          b.style.cursor = "default";
+          if (i === correct) {
+            b.style.background = "rgba(46,204,113,0.45)";
+            b.style.borderColor = "#2ecc71";
+          } else if (i === chosen) {
+            b.style.background = "rgba(231,76,60,0.45)";
+            b.style.borderColor = "#e74c3c";
+          } else {
+            b.style.opacity = "0.45";
+          }
+        }
+
+        setTimeout(() => {
+          document.getElementById("quiz-feedback-icon").textContent  = isCorrect ? "🎉" : "💡";
+          document.getElementById("quiz-feedback-title").textContent = isCorrect ? "Correto!" : (chosen === -1 ? "Tempo esgotado!" : "Quase lá!");
+          document.getElementById("quiz-feedback-text").textContent  = q.feedback;
+          quizShow("quiz-feedback");
+        }, 700);
+      }
+
+      function quizNext() {
+        quizCurrent++;
+        if (quizCurrent < QUIZ_QUESTIONS.length) {
+          quizShowQuestion();
+        } else {
+          quizShowResult();
+        }
+      }
+
+      function quizShowResult() {
+        document.getElementById("quiz-progress-bar").style.width = "100%";
+        const s = quizScore;
+        const t = QUIZ_QUESTIONS.length;
+        const pct = Math.round((s / t) * 100);
+        let emoji, title, msg;
+        if (pct === 100)     { emoji = "🏆"; title = "Perfeito!";          msg = "Você é um verdadeiro guardião do planeta!"; }
+        else if (pct >= 66)  { emoji = "🌱"; title = "Muito bem!";         msg = "Você sabe bastante sobre sustentabilidade!"; }
+        else if (pct >= 33)  { emoji = "💧"; title = "Continue tentando!"; msg = "Você está no caminho certo. Continue aprendendo!"; }
+        else                 { emoji = "🌍"; title = "Vamos aprender!";    msg = "Explore os nossos jogos para aprender mais sobre o planeta!"; }
+
+        document.getElementById("quiz-result-emoji").textContent = emoji;
+        document.getElementById("quiz-result-title").textContent = title;
+        document.getElementById("quiz-result-msg").textContent   = msg;
+        document.getElementById("quiz-result-score").textContent = `${s} de ${t} corretas (${pct}%)`;
+        quizShow("quiz-result");
+      }
+
+      function quizRestart() {
+        quizStart();
+      }
+
+      function quizClose() {
+        clearInterval(quizTimer);
+        quizShow("quiz-start");
+        quizResumeCarousel();
+        const el = document.getElementById("carouselExampleAutoplaying");
+        const c = bootstrap.Carousel.getInstance(el) || new bootstrap.Carousel(el);
+        c.next();
+      }
+
+      // Auto-start quiz when slide becomes active
+      document.addEventListener("DOMContentLoaded", () => {
+        const carouselEl = document.getElementById("carouselExampleAutoplaying");
+        carouselEl.addEventListener("slid.bs.carousel", (e) => {
+          if (e.relatedTarget && e.relatedTarget.id === "quiz-carousel-slide") {
+            const c = bootstrap.Carousel.getInstance(carouselEl) || new bootstrap.Carousel(carouselEl);
+            c.pause();
+            quizShow("quiz-start");
+          }
+        });
+      });
+    </script>
+
+    <!-- VLibras: Acessibilidade em Libras -->
+    <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+      <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+      </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+</html>

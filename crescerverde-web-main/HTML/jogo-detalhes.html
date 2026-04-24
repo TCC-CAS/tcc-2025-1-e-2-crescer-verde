@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="/Imagens/EarthPNG.png"
+      sizes="16x16"
+      type="image/png"
+    />
+    <title>Detalhes do Jogo - Plataforma de Sustentabilidade</title>
+    <link rel="stylesheet" href="../CSS/jogos.css" />
+    <link rel="stylesheet" href="../CSS/styles.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .content-list-item {
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+      .content-list-item:hover {
+        background-color: #f8f9fa;
+      }
+      .content-list-item.active {
+        background-color: #e9ecef;
+        border-left: 4px solid #198754;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <a href="/index.html" class="navbar-brand">
+        <img src="../Imagens/logo.png" alt="Logo" style="width: 220px" />
+      </a>
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/HTML/jogos.html">Jogos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/HTML/certificados.html">Certificados</a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="/HTML/usuarios.html"
+            id="nav-usuarios"
+            style="display: none"
+            >Usuários</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/HTML/login.html" id="nav-login">Login</a>
+        </li>
+      </ul>
+    </nav>
+
+    <main class="container mt-4 mb-5">
+      <div id="course-header" class="mb-4">
+        <h2 id="course-title" class="fw-bold">Carregando Jogo...</h2>
+        <p id="course-desc" class="text-muted"></p>
+      </div>
+
+      <!-- Student Progress Section -->
+      <div id="student-progress-section" class="mb-4" style="display: none">
+        <h5>Seu Progresso</h5>
+        <div class="progress" style="height: 25px">
+          <div
+            id="course-progress-bar"
+            class="progress-bar bg-success"
+            role="progressbar"
+            style="width: 0%"
+            aria-valuenow="0"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
+            0%
+          </div>
+        </div>
+        <p id="course-progress-text" class="text-muted mt-1 small">
+          0 de 0 conteúdos concluídos
+        </p>
+        <div
+          id="course-completed-alert"
+          class="alert alert-success mt-2"
+          style="display: none"
+        >
+          <strong>Parabéns!</strong> Você concluiu este jogo.
+          <div class="mt-2">
+            <button id="concluir-curso-btn" class="btn btn-primary btn-sm" onclick="window.concluirCurso()">
+              Concluir Jogo e Emitir Certificado
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Actions Section -->
+      <div id="admin-actions-section" class="mb-4" style="display: none">
+        <button
+          class="btn btn-success fw-bold"
+          data-bs-toggle="modal"
+          data-bs-target="#contentModal"
+          onclick="window.prepareAddContent()"
+        >
+          + Adicionar Conteúdo
+        </button>
+        <button
+          class="btn btn-secondary fw-bold"
+          onclick="window.location.href = '/HTML/jogos.html'"
+        >
+          Voltar
+        </button>
+      </div>
+
+      <div class="row">
+        <!-- Content List -->
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-header bg-success text-white fw-bold">
+              Conteúdo do Jogo
+            </div>
+            <ul class="list-group list-group-flush" id="content-list">
+              <li class="list-group-item text-center">
+                Carregando conteúdos...
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Content Viewer -->
+        <div class="col-md-8">
+          <div class="card h-100">
+            <div class="card-body" id="content-viewer">
+              <div class="text-center text-muted my-5">
+                <h4>Selecione um conteúdo na lista para visualizar</h4>
+              </div>
+            </div>
+            <div
+              class="card-footer bg-white border-top-0 text-end"
+              id="content-actions"
+              style="display: none"
+            >
+              <button
+                id="mark-completed-btn"
+                class="btn btn-success"
+                onclick="window.markContentCompleted()"
+              >
+                Marcar como Concluído
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal Adicionar/Editar Conteúdo -->
+    <div
+      class="modal fade"
+      id="contentModal"
+      tabindex="-1"
+      aria-labelledby="contentModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="contentModalLabel">
+              Adicionar Conteúdo
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form id="contentForm">
+            <input type="hidden" id="contentId" />
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="contentTitle" class="form-label"
+                  >Título do Conteúdo</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="contentTitle"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="contentType" class="form-label"
+                  >Tipo de Conteúdo</label
+                >
+                <select
+                  class="form-select"
+                  id="contentType"
+                  required
+                  onchange="window.toggleContentInput()"
+                >
+                  <option value="video">Vídeo (URL Youtube Embed)</option>
+                  <option value="text">Texto</option>
+                  <option value="game">Jogo/Atividade (Código HTML)</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label
+                  for="contentData"
+                  class="form-label"
+                  id="contentDataLabel"
+                  >URL do Vídeo</label
+                >
+                <textarea
+                  class="form-control"
+                  id="contentData"
+                  rows="4"
+                  required
+                ></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="contentOrder" class="form-label"
+                  >Ordem (Posição)</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="contentOrder"
+                  value="0"
+                  required
+                />
+              </div>
+              <div
+                id="modal-error"
+                class="text-danger mt-2"
+                style="display: none"
+              ></div>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+              <button
+                type="button"
+                class="btn btn-danger"
+                id="deleteContentBtn"
+                style="display: none"
+                onclick="window.deleteContent()"
+              >
+                Excluir
+              </button>
+              <div>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cancelar
+                </button>
+                <button type="submit" class="btn btn-success">Salvar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2026 Plataforma de Jogos de Sustentabilidade Infantil</p>
+      <p style="font-size: 0.8rem; opacity: 0.65; margin-top: 4px;">
+        <a href="#" data-terms-tab="uso" style="color: #a5d6a7; text-decoration: none;">Termos de Uso</a>
+        &nbsp;&middot;&nbsp;
+        <a href="#" data-terms-tab="privacidade" style="color: #a5d6a7; text-decoration: none;">Pol&iacute;tica de Privacidade</a>
+        &nbsp;&middot;&nbsp;
+        <a href="#" data-terms-tab="acessibilidade" style="color: #a5d6a7; text-decoration: none;">Acessibilidade</a>
+      </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/config.js"></script>
+    <script src="../JS/global.js"></script>
+    <script src="../JS/jogo-detalhes.js"></script>
+    <script src="../JS/auth-sync.js"></script>
+    <script src="../JS/terms-modal.js"></script>
+
+    <!-- VLibras: Acessibilidade em Libras -->
+    <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+      <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+      </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const loggerMiddleware = require('./middlewares/loggerMiddleware');
+const { authRoutes, courseRoutes, userRoutes, courseContentRoutes, courseProgressRoutes, certificateRoutes } = require('./routes/export');
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+
+// request logger must run early so all incoming traffic is logged
+app.use(loggerMiddleware);
+
+// Mongoose connection with serverless-friendly pooling
+let mongooseConnected = false;
+async function connectDB() {
+  if (mongooseConnected) return;
+  await mongoose.connect(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 5000,
+    bufferCommands: false,
+  });
+  mongooseConnected = true;
+  console.log('Conectado ao MongoDB');
+}
+connectDB().catch((err) => console.error('Erro ao conectar com MongoDB:', err));
+
+// rotas
+app.use('/api/auth', authRoutes);
+
+// rotas protegidas
+app.use('/api/courses', courseRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/courseContents', courseContentRoutes);
+app.use('/api/courseProgress', courseProgressRoutes);
+app.use('/api/certificates', certificateRoutes);
+
+if (require.main === module) {
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`Servidor rodando na porta ${port}`);
+  });
+}
+
+module.exports = app;
