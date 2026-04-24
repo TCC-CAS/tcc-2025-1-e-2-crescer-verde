@@ -18,12 +18,21 @@ async function connectDB() {
   if (mongooseConnected) return;
   await mongoose.connect(process.env.MONGO_URI, {
     serverSelectionTimeoutMS: 5000,
-    bufferCommands: false,
   });
   mongooseConnected = true;
   console.log('Conectado ao MongoDB');
 }
-connectDB().catch((err) => console.error('Erro ao conectar com MongoDB:', err));
+
+// Garante conexão com o banco antes de qualquer rota
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error('Erro ao conectar com MongoDB:', err);
+    res.status(500).json({ error: 'Falha na conexão com o banco de dados' });
+  }
+});
 
 // rotas
 app.use('/api/auth', authRoutes);
