@@ -268,6 +268,7 @@
       function quizShowQuestion() {
         const q = QUIZ_QUESTIONS[quizCurrent];
         quizAnswered = false;
+        document.body.style.overflow = 'hidden';
 
         document.getElementById("quiz-counter").textContent = `Pergunta ${quizCurrent + 1} / ${QUIZ_QUESTIONS.length}`;
         document.getElementById("quiz-progress-bar").style.width = ((quizCurrent / QUIZ_QUESTIONS.length) * 100) + "%";
@@ -367,6 +368,7 @@
       }
 
       function quizShowResult() {
+        document.body.style.overflow = '';
         document.getElementById("quiz-progress-bar").style.width = "100%";
         const s = quizScore;
         const t = QUIZ_QUESTIONS.length;
@@ -390,6 +392,7 @@
 
       function quizClose() {
         clearInterval(quizTimer);
+        document.body.style.overflow = '';
         quizShow("quiz-start");
         quizResumeCarousel();
         const el = document.getElementById("carouselExampleAutoplaying");
