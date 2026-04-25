@@ -6,12 +6,13 @@ const loggerMiddleware = require('./middlewares/loggerMiddleware');
 const { authRoutes, courseRoutes, userRoutes, courseContentRoutes, courseProgressRoutes, certificateRoutes } = require('./routes/export');
 
 const app = express();
-app.use(express.json());
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+app.options('*', cors());
+app.use(express.json());
 
 // request logger must run early so all incoming traffic is logged
 app.use(loggerMiddleware);
