@@ -2,7 +2,7 @@
 
 Plataforma web educativa com jogos interativos voltados para crianças e jovens aprenderem sobre sustentabilidade, reciclagem e meio ambiente.
 
-**Acesso:** [crescer-verde-app.vercel.app](https://crescer-verde-app.vercel.app)
+**Acesso:** [crescerverde.vercel.app](https://crescerverde.vercel.app/)
 
 ---
 
