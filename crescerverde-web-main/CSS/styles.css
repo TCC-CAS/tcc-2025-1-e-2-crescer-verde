@@ -100,7 +100,12 @@ footer {
   height: 480px;
 }
 
+#carouselExampleAutoplaying {
+  overflow: hidden;
+}
+
 #carouselExampleAutoplaying .carousel-item img {
   width: 100%;
   height: auto;
+  display: block;
 }
