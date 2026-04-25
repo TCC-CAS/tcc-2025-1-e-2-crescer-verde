@@ -99,23 +99,17 @@ footer {
   overflow: hidden;
 }
 
-/* Proporção fixa 16:9 para todos os slides — elimina flickering */
-#carouselExampleAutoplaying .carousel-inner {
-  aspect-ratio: 16 / 9;
-}
-
-#carouselExampleAutoplaying .carousel-item {
-  height: 100%;
-}
-
 #carouselExampleAutoplaying .carousel-item img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   display: block;
 }
 
-#carouselExampleAutoplaying .quiz-slide,
+/* Quiz slide acompanha a proporção das imagens do Canva (1841×517) */
+#carouselExampleAutoplaying .quiz-slide {
+  aspect-ratio: 1841 / 517;
+}
+
 #carouselExampleAutoplaying .quiz-slide > div {
   height: 100%;
   width: 100%;
