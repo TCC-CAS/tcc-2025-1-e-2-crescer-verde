@@ -95,17 +95,28 @@ footer {
   margin-top: auto; /* Empurra o rodapé para o final da página */
 }
 
-#carouselExampleAutoplaying .quiz-slide,
-#carouselExampleAutoplaying .quiz-slide > div {
-  height: 480px;
-}
-
 #carouselExampleAutoplaying {
   overflow: hidden;
 }
 
+/* Proporção fixa 16:9 para todos os slides — elimina flickering */
+#carouselExampleAutoplaying .carousel-inner {
+  aspect-ratio: 16 / 9;
+}
+
+#carouselExampleAutoplaying .carousel-item {
+  height: 100%;
+}
+
 #carouselExampleAutoplaying .carousel-item img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
+}
+
+#carouselExampleAutoplaying .quiz-slide,
+#carouselExampleAutoplaying .quiz-slide > div {
+  height: 100%;
+  width: 100%;
 }
