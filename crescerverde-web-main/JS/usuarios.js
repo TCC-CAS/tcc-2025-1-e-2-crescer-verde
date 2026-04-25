@@ -123,6 +123,8 @@ function renderUsers(users) {
   }
 
   users.forEach(user => {
+    const displayName = user.name || '(sem nome)';
+    const safeName = displayName.replace(/'/g, "\\'");
     const roleBadge = user.role === 'admin'
       ? '<span class="badge bg-light-success border border-success border-opacity-25 rounded-pill shadow-sm"><i class="bi bi-shield-lock-fill me-1"></i>Admin</span>'
       : '<span class="badge bg-light-secondary border border-secondary border-opacity-25 rounded-pill shadow-sm"><i class="bi bi-person-fill me-1"></i>Usuário</span>';
@@ -131,16 +133,16 @@ function renderUsers(users) {
     row.innerHTML = `
             <td class="ps-4 fw-medium text-dark">
                 <div class="d-flex align-items-center">
-                    ${user.name}
+                    ${displayName}
                 </div>
             </td>
-            <td class="text-muted">${user.email}</td>
+            <td class="text-muted">${user.email || ''}</td>
             <td>${roleBadge}</td>
             <td class="text-end pe-4">
                 <button class="btn btn-sm btn-light text-primary border action-btn me-1" onclick="openEditModal('${user._id}')" title="Editar">
                     <i class="bi bi-pencil-fill"></i>
                 </button>
-                <button class="btn btn-sm btn-light text-danger border action-btn" onclick="openDeleteModal('${user._id}', '${user.name.replace(/'/g, "\\'")}')" title="Excluir">
+                <button class="btn btn-sm btn-light text-danger border action-btn" onclick="openDeleteModal('${user._id}', '${safeName}')" title="Excluir">
                     <i class="bi bi-trash3-fill"></i>
                 </button>
             </td>
