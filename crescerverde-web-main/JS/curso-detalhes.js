@@ -206,9 +206,9 @@ window.selectContent = function (contentId) {
       btn.disabled = true;
     } else {
       if (content.type === 'game') {
-        btn.textContent = "Pendente (Conclua o Jogo)";
-        btn.className = "btn btn-warning";
-        btn.disabled = true; // Disabled until postMessage unlocks it
+        btn.textContent = "Marcar como Concluído";
+        btn.className = "btn btn-success";
+        btn.disabled = false;
       } else {
         btn.textContent = "Marcar como Concluído";
         btn.className = "btn btn-success";
