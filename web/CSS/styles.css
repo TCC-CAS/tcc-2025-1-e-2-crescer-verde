@@ -277,21 +277,12 @@ footer a:hover { color: var(--cv-primary-light); }
 #carouselExampleAutoplaying .carousel-item img {
   display: block;
   width: 100%;
-  height: 420px;
-  object-fit: cover;
-  object-position: center;
+  height: auto;
   max-width: none !important;
 }
 
-#carouselExampleAutoplaying .quiz-slide {
-  height: 420px;
-  aspect-ratio: unset;
-}
-
-#carouselExampleAutoplaying .quiz-slide > div {
-  height: 100%;
-  width: 100%;
-}
+#carouselExampleAutoplaying .quiz-slide { aspect-ratio: 1841 / 517; }
+#carouselExampleAutoplaying .quiz-slide > div { height: 100%; width: 100%; }
 
 /* ── Mobile fixes ────────────────────────────────────────────── */
 
