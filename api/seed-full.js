@@ -354,7 +354,7 @@ show();
 
 const TRAILS = [
   {
-    course: { title: 'Coleta Seletiva', description: 'Aprenda a separar corretamente o lixo nas lixeiras coloridas e ajude o planeta a reciclar mais!', coverImage: 'https://crescerverde.vercel.app/Imagens/MiniGame1-new.png', difficulty: 'iniciante', minPlan: 'free', emoji: '♻️', estimatedMinutes: 10, order: 1, category: 'reciclagem', tags: ['reciclagem','lixo','meio ambiente'] },
+    course: { title: 'Coleta Seletiva', description: 'Aprenda a separar corretamente o lixo nas lixeiras coloridas e ajude o planeta a reciclar mais!', coverImage: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=400&q=80', difficulty: 'iniciante', minPlan: 'free', emoji: '♻️', estimatedMinutes: 10, order: 1, category: 'reciclagem', tags: ['reciclagem','lixo','meio ambiente'] },
     content: { title: 'Jogo: Coleta Seletiva', type: 'game', content: GAME_COLETA, order: 1 }
   },
   {
@@ -366,11 +366,11 @@ const TRAILS = [
     content: { title: 'Jogo: Plante Árvores', type: 'game', content: GAME_ARVORES, order: 1 }
   },
   {
-    course: { title: 'Quiz ESG', description: 'Teste seus conhecimentos sobre sustentabilidade, reciclagem, energia e meio ambiente!', coverImage: 'https://crescerverde.vercel.app/Imagens/cidade-verde.png', difficulty: 'iniciante', minPlan: 'familia', emoji: '📊', estimatedMinutes: 12, order: 4, category: 'quiz', tags: ['quiz','esg','sustentabilidade'] },
+    course: { title: 'Quiz ESG', description: 'Teste seus conhecimentos sobre sustentabilidade, reciclagem, energia e meio ambiente!', coverImage: 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=400&q=80', difficulty: 'iniciante', minPlan: 'familia', emoji: '📊', estimatedMinutes: 12, order: 4, category: 'quiz', tags: ['quiz','esg','sustentabilidade'] },
     content: { title: 'Quiz: Sustentabilidade', type: 'game', content: GAME_QUIZ_ESG, order: 1 }
   },
   {
-    course: { title: 'Cidade Sustentável', description: 'Construa do zero uma cidade ecológica! Escolha estruturas verdes e crie um modelo de desenvolvimento sustentável.', coverImage: 'https://crescerverde.vercel.app/Imagens/banner3.png', difficulty: 'intermediario', minPlan: 'familia', emoji: '🏙️', estimatedMinutes: 15, order: 5, category: 'urbanismo', tags: ['cidade','urbanismo','construção verde'] },
+    course: { title: 'Cidade Sustentável', description: 'Construa do zero uma cidade ecológica! Escolha estruturas verdes e crie um modelo de desenvolvimento sustentável.', coverImage: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&q=80', difficulty: 'intermediario', minPlan: 'familia', emoji: '🏙️', estimatedMinutes: 15, order: 5, category: 'urbanismo', tags: ['cidade','urbanismo','construção verde'] },
     content: { title: 'Jogo: Construa a Cidade', type: 'game', content: GAME_CIDADE, order: 1 }
   },
   {

@@ -55,12 +55,32 @@
 
 .trail-card.locked { cursor: default; }
 
-.trail-emoji {
-  font-size: 3rem;
-  text-align: center;
-  padding: 22px 16px 8px;
-  line-height: 1;
+/* ── Card header: image or emoji ────────────────────────────── */
+.trail-header {
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  flex-shrink: 0;
 }
+
+.trail-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.trail-emoji-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+}
+
+.trail-header-emoji .trail-emoji-fallback { display: flex; }
 
 .trail-body {
   padding: 8px 18px 18px;

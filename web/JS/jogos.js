@@ -58,6 +58,14 @@ function renderTrails(courses) {
         <button class="btn-unlock" onclick="event.stopPropagation(); window.location.href='/HTML/planos.html'">Ver Planos</button>
       </div>` : "";
 
+    const coverHtml = c.coverImage
+      ? `<div class="trail-header">
+           <img src="${c.coverImage}" alt="${c.title}" class="trail-cover-img"
+                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+           <div class="trail-emoji-fallback" style="display:none">${emoji}</div>
+         </div>`
+      : `<div class="trail-header trail-header-emoji"><div class="trail-emoji-fallback">${emoji}</div></div>`;
+
     const clickAttr = locked
       ? 'class="trail-card locked"'
       : `class="trail-card" onclick="window.location.href='/HTML/jogo-detalhes.html?id=${c._id}'"`;
@@ -65,7 +73,7 @@ function renderTrails(courses) {
     return `
       <div ${clickAttr} data-diff="${c.difficulty || 'iniciante'}">
         ${editBtn}
-        <div class="trail-emoji">${emoji}</div>
+        ${coverHtml}
         <div class="trail-body">
           <div class="trail-title">${c.title}</div>
           <div class="trail-desc">${c.description}</div>
