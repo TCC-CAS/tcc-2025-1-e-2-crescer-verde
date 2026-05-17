@@ -1,45 +1,60 @@
-# Crescer Verde — Plataforma de Jogos de Sustentabilidade
+# CrescerVerde — Frontend
 
-Plataforma web educativa com jogos interativos voltados para crianças e jovens aprenderem sobre sustentabilidade, reciclagem e meio ambiente.
+Frontend estático da plataforma CrescerVerde.
 
-**Acesso:** [crescerverde.vercel.app](https://crescerverde.vercel.app/)
+**🌐 Acesso:** [crescerverde.vercel.app](https://crescerverde.vercel.app/)
+
+Documentação completa do projeto: [README principal](../README.md)
 
 ---
 
-## Funcionalidades
+## Páginas
 
-- **Jogos** — Cidade Verde (eco city) e Cidade Coleta Seletiva (coleta de lixo top-down)
-- **Quiz interativo** — perguntas sobre sustentabilidade com timer e feedback
-- **Trilhas de cursos** — conteúdo educativo sobre ESG e meio ambiente
-- **Certificados** — emissão de certificado ao concluir trilhas
-- **Autenticação** — login/cadastro com JWT, recuperação de senha
-- **Acessibilidade** — VLibras (Libras) integrado em todas as páginas
-- **Painel admin** — gerenciamento de usuários (somente administradores)
-
-## Tecnologias
-
-| Camada | Stack |
+| Arquivo | Descrição |
 |---|---|
-| Frontend | HTML5, CSS3, Bootstrap 5, JavaScript |
-| Backend | Node.js, Express 5, MongoDB (Mongoose) |
-| Auth | JWT + bcrypt |
-| Deploy | Vercel (frontend + API serverless) |
+| `index.html` | Home — carrossel, quiz interativo de sustentabilidade |
+| `HTML/jogos.html` | Catálogo de trilhas com filtro por dificuldade |
+| `HTML/jogo-detalhes.html` | Player de conteúdo — jogos, vídeos e textos |
+| `HTML/certificados.html` | Certificados conquistados pelo usuário |
+| `HTML/planos.html` | Planos: Gratuito / Família / Escola |
+| `HTML/login.html` | Login e cadastro |
+| `HTML/usuarios.html` | Admin — gestão de usuários |
+| `HTML/painel-parental.html` | Responsável — vincula alunos e define limite de sessão |
 
-## Estrutura
+---
+
+## Estrutura de Scripts
+
+| Arquivo | Responsabilidade |
+|---|---|
+| `JS/config.js` | Define `API_BASE` (URL da API) |
+| `JS/global.js` | Navbar scroll, hamburger, ECA session timer, fetch interceptor (401) |
+| `JS/auth-sync.js` | Exibe nome do usuário logado, oculta certificados para admin |
+| `JS/terms-modal.js` | Modal de Termos de Uso / Privacidade / Acessibilidade |
+| `JS/jogos.js` | Carrega e renderiza trilhas, lógica de plano (lock/unlock) |
+| `JS/jogo-detalhes.js` | Player de conteúdo, progresso, emissão de certificado |
+| `JS/certificados.js` | Lista e impressão de certificados |
+
+---
+
+## Estrutura de Estilos
+
+| Arquivo | Responsabilidade |
+|---|---|
+| `CSS/design-system.css` | Variáveis globais, navbar, page-header, footer |
+| `CSS/styles.css` | Home (hero, carrossel, quiz) |
+| `CSS/jogos.css` | Cards de trilhas, filtros, lock overlay |
+| `CSS/planos.css` | Cards de planos (Gratuito / Família / Escola) |
+| `CSS/login.css` | Formulário de login/cadastro |
+| `CSS/usuarios.css` | Tabela de gestão de usuários |
+
+---
+
+## Fluxo de Autenticação
 
 ```
-crescerverde-web-main/   # Frontend estático
-crescerverde-api-main/   # API REST (Node/Express)
+localStorage.token  →  enviado como Bearer em todo fetch autenticado
+localStorage.user   →  objeto { id, name, role, plan, ... }
 ```
 
-## Como rodar localmente
-
-```bash
-# API
-cd crescerverde-api-main
-npm install
-# crie .env com MONGO_URI e JWT_SECRET
-npm start
-
-# Frontend — abra index.html no navegador ou use Live Server
-```
+`global.js` intercepta respostas 401 e redireciona para `/HTML/login.html` automaticamente.
