@@ -44,8 +44,10 @@
   line-height: 1.55;
 }
 
-.card .card-footer {
-  padding: 12px 18px;
-  background: transparent;
-  border-top: 1px solid rgba(39,174,96,.08);
+/* ── Mobile ──────────────────────────────────────────────────── */
+@media (max-width: 576px) {
+  .card img { height: 160px; }
+  .card .card-body { padding: 12px 14px; }
+  .card .card-title { font-size: 0.95rem; }
+  .card .card-text { font-size: 0.85rem; }
 }

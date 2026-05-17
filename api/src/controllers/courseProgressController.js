@@ -1,11 +1,13 @@
 const CourseProgress = require('../models/CourseProgress');
 
+const resolveUserId = (req) =>
+  req.user.role === 'admin' ? (req.body.userId || req.user.id) : req.user.id;
+
 module.exports = {
   async addContent(req, res) {
     try {
       const { courseId, contentId } = req.body;
-      const userId = req.user.role === 'admin' ? (req.body.userId || req.user.id) : req.user.id;
-
+      const userId = resolveUserId(req);
       const courseProgress = await CourseProgress.findOneAndUpdate(
         { userId, courseId },
         { $addToSet: { completedContents: contentId } },
@@ -20,8 +22,7 @@ module.exports = {
   async removeContent(req, res) {
     try {
       const { courseId, contentId } = req.body;
-      const userId = req.user.role === 'admin' ? (req.body.userId || req.user.id) : req.user.id;
-
+      const userId = resolveUserId(req);
       const courseProgress = await CourseProgress.findOneAndUpdate(
         { userId, courseId },
         { $pull: { completedContents: contentId } },
@@ -36,8 +37,7 @@ module.exports = {
   async update(req, res) {
     try {
       const { courseId, isCourseCompleted } = req.body;
-      const userId = req.user.role === 'admin' ? (req.body.userId || req.user.id) : req.user.id;
-
+      const userId = resolveUserId(req);
       const courseProgress = await CourseProgress.findOneAndUpdate(
         { userId, courseId },
         { isCourseCompleted },
@@ -52,8 +52,7 @@ module.exports = {
   async get(req, res) {
     try {
       const { courseId } = req.body;
-      const userId = req.user.role === 'admin' ? (req.body.userId || req.user.id) : req.user.id;
-
+      const userId = resolveUserId(req);
       const courseProgress = await CourseProgress.findOne({ userId, courseId });
       return res.send({ courseProgress });
     } catch (err) {

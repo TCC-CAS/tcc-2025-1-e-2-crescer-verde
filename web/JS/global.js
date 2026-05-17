@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const user = JSON.parse(userStr);
       if (user.role === "admin") isAdmin = true;
     } catch (e) {
-      console.error("Erro ao ler dados do usuário:", e);
+      // ignorar erros de parse
     }
 
     if (isAdmin && navUsuariosLi) {

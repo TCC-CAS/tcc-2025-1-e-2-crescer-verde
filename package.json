@@ -9,5 +9,8 @@
   "scripts": {
     "start": "npm run start --workspace=api",
     "start:api": "npm run start --workspace=api"
+  },
+  "dependencies": {
+    "jimp": "^1.6.1"
   }
 }

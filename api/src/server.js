@@ -1,10 +1,12 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const rateLimit = require('express-rate-limit');
 const loggerMiddleware = require('./middlewares/loggerMiddleware');
 const { authRoutes, courseRoutes, userRoutes, courseContentRoutes, courseProgressRoutes, certificateRoutes } = require('./routes/export');
 
 const app = express();
+const isProd = process.env.NODE_ENV === 'production';
 
 const ALLOWED_ORIGINS = [
   'https://crescerverde.vercel.app',
@@ -31,14 +33,23 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json({ limit: '50kb' }));
-app.use(loggerMiddleware);
+if (!isProd) app.use(loggerMiddleware);
+
+/* Global rate limiter — 200 req/15min per IP across all API routes */
+app.use('/api', rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 200,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Muitas requisições. Tente novamente em alguns minutos.' },
+}));
 
 let mongooseConnected = false;
 async function connectDB() {
   if (mongooseConnected) return;
   await mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 5000 });
   mongooseConnected = true;
-  console.log('Conectado ao MongoDB');
+  if (!isProd) console.log('Conectado ao MongoDB');
 }
 
 app.use(async (req, res, next) => {
@@ -46,7 +57,7 @@ app.use(async (req, res, next) => {
     await connectDB();
     next();
   } catch (err) {
-    console.error('Erro ao conectar com MongoDB:', err);
+    if (!isProd) console.error('Erro ao conectar com MongoDB:', err);
     res.status(500).json({ error: 'Falha na conexão com o banco de dados' });
   }
 });
@@ -60,7 +71,9 @@ app.use('/api/certificates', certificateRoutes);
 
 if (require.main === module) {
   const port = process.env.PORT || 3000;
-  app.listen(port, () => console.log(`Servidor rodando na porta ${port}`));
+  app.listen(port, () => {
+    if (!isProd) console.log(`Servidor rodando na porta ${port}`);
+  });
 }
 
 module.exports = app;

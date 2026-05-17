@@ -1,5 +1,4 @@
 const User = require('../models/User');
-const bcrypt = require('bcryptjs');
 
 const ALLOWED_UPDATE_FIELDS = ['name', 'email', 'role', 'plan', 'isMinor', 'guardianEmail', 'sessionTimeLimitMinutes', 'guardianOf'];
 

@@ -30,6 +30,34 @@
         background-color: var(--cv-primary-subtle);
         border-left: 4px solid var(--cv-primary);
       }
+
+      #content-viewer iframe {
+        width: 100%;
+        min-height: 480px;
+        border: none;
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        /* Stack list above viewer; give viewer room to breathe */
+        #content-viewer {
+          min-height: 420px;
+        }
+        #content-viewer iframe {
+          min-height: 420px;
+        }
+        /* Keep admin action buttons accessible */
+        #admin-actions-section .btn {
+          width: 100%;
+          margin-bottom: 8px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        #content-viewer iframe {
+          min-height: 380px;
+        }
+      }
     </style>
   </head>
 

@@ -1,7 +1,7 @@
 let currentUser;
 
 document.addEventListener("DOMContentLoaded", async () => {
-    var certificates = [];
+    let certificates = [];
     let coursesMap = {};
     const userStr = localStorage.getItem("user");
     if (!userStr) {
@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
         currentUser = JSON.parse(userStr);
     } catch (e) {
-        console.error(e);
         return;
     }
 
@@ -51,7 +50,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
             container.innerHTML = "";
-            console.log(certificates);
             certificates.forEach(cert => {
                 const courseName = coursesMap[cert.courseId] || "Curso Indisponível";
                 const issueDate = new Date(cert.createdAt || new Date()).toLocaleDateString("pt-BR");
@@ -82,7 +80,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
         }
     } catch (err) {
-        console.error(err);
         document.getElementById("certificates-container").innerHTML = `
             <div class="col-12 text-center text-danger mt-4">
                 <p>Erro ao carregar certificados. Tente novamente mais tarde.</p>
@@ -93,15 +90,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 window.printCertificate = async function (certificateId) {
-    console.log("procurando por certificado: " + certificateId);
-    var certRes = await fetch(`${API_BASE}/api/certificates/${certificateId}`);
+    const certRes = await fetch(`${API_BASE}/api/certificates/${certificateId}`);
 
     if (!certRes.ok) {
         alert("Certificado não encontrado");
         return;
     }
 
-    var certificate = await certRes.json();
+    const certificate = await certRes.json();
 
     const res = await fetch("/HTML/template-certificate.html");
     if (!res.ok) throw new Error("Template não encontrado");

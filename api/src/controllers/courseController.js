@@ -17,7 +17,7 @@ module.exports = {
 
   async list(req, res) {
     try {
-      const courses = await Course.find();
+      const courses = await Course.find().sort({ order: 1 });
       return res.send({ courses });
     } catch (err) {
       return res.status(400).send({ error: 'Erro ao listar cursos' });

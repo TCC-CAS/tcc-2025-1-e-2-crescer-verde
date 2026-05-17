@@ -89,7 +89,7 @@
               <div id="quiz-start" style="display:block;text-align:center;">
                 <div style="font-size:64px;margin-bottom:12px;">🌍</div>
                 <h2 style="color:#fff;font-size:2rem;font-weight:900;margin:0 0 10px;">Quiz de Sustentabilidade</h2>
-                <p style="color:#a5d6a7;font-size:1.1rem;margin:0 auto 28px;max-width:480px;line-height:1.5;">3 perguntas, 15 segundos cada. Você consegue acertar tudo? Teste seus conhecimentos sobre o meio ambiente!</p>
+                <p style="color:#a5d6a7;font-size:1.1rem;margin:0 auto 28px;max-width:480px;line-height:1.5;">3 perguntas, 20 segundos cada. Você consegue acertar tudo? Teste seus conhecimentos sobre o meio ambiente!</p>
                 <button onclick="quizStart()" style="background:#2ecc71;color:#1b5e20;border:none;padding:14px 44px;border-radius:26px;font-size:1.2rem;font-weight:900;cursor:pointer;letter-spacing:0.5px;">▶ Iniciar Quiz</button>
               </div>
 
@@ -102,7 +102,7 @@
                   <span id="quiz-counter" style="color:#a5d6a7;font-size:0.95rem;white-space:nowrap;font-weight:700;"></span>
                 </div>
                 <div style="text-align:center;margin-bottom:8px;">
-                  <span style="background:rgba(255,255,255,0.15);color:#fff;padding:4px 18px;border-radius:20px;font-size:1rem;font-weight:700;">⏱ <span id="quiz-timer-val">30</span>s</span>
+                  <span style="background:rgba(255,255,255,0.15);color:#fff;padding:4px 18px;border-radius:20px;font-size:1rem;font-weight:700;">⏱ <span id="quiz-timer-val">20</span>s</span>
                 </div>
                 <div style="height:5px;background:rgba(255,255,255,0.15);border-radius:3px;margin-bottom:18px;overflow:hidden;">
                   <div id="quiz-timer-bar" style="height:100%;background:#f9a825;border-radius:3px;width:100%;transition:width 1s linear;"></div>
@@ -228,9 +228,9 @@
       let quizCurrent = 0;
       let quizScore = 0;
       let quizTimer = null;
-      let quizTimeLeft = 30;
+      let quizTimeLeft = 20;
       let quizAnswered = false;
-      const QUIZ_TIME = 30;
+      const QUIZ_TIME = 20;
 
       function quizShow(id) {
         ["quiz-start","quiz-question","quiz-feedback","quiz-result"].forEach(s => {

@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       currentUser = JSON.parse(userStr);
       isAdmin = currentUser.role === 'admin';
-    } catch (e) { console.error(e); }
+    } catch (e) {}
   } else {
     alert("Você precisa estar logado para acessar os detalhes do jogo.");
     window.location.href = "/HTML/login.html";
@@ -64,7 +64,7 @@ async function loadCourseDetails() {
       }
     }
   } catch (err) {
-    console.error("Erro ao carregar curso:", err);
+    // course title stays as fallback
   }
 }
 
@@ -102,7 +102,7 @@ async function loadContentsAndProgress() {
     renderContentList();
     checkFullCompletion();
   } catch (err) {
-    console.error("Erro ao carregar conteúdos/progresso:", err);
+    // silently ignore — content list stays in last-known state
   }
 }
 
@@ -165,7 +165,7 @@ window.selectContent = function (contentId) {
       try {
         const urlObj = new URL(embedUrl);
         videoId = urlObj.searchParams.get("v");
-      } catch (e) { console.error(e); }
+      } catch (e) {}
     } else if (embedUrl.includes("youtu.be/")) {
       videoId = embedUrl.split("youtu.be/")[1].split("?")[0];
     } else if (embedUrl.includes("youtube.com/embed/")) {
@@ -205,15 +205,9 @@ window.selectContent = function (contentId) {
       btn.className = "btn btn-secondary";
       btn.disabled = true;
     } else {
-      if (content.type === 'game') {
-        btn.textContent = "Marcar como Concluído";
-        btn.className = "btn btn-success";
-        btn.disabled = false;
-      } else {
-        btn.textContent = "Marcar como Concluído";
-        btn.className = "btn btn-success";
-        btn.disabled = false;
-      }
+      btn.textContent = "Marcar como Concluído";
+      btn.className = "btn btn-success";
+      btn.disabled = false;
     }
   }
 };
@@ -239,7 +233,7 @@ window.markContentCompleted = async function () {
       alert("Erro ao marcar como concluído.");
     }
   } catch (err) {
-    console.error(err);
+    alert("Erro ao marcar como concluído.");
   }
 };
 
@@ -265,18 +259,15 @@ window.concluirCurso = async function () {
       body: JSON.stringify({ userId: currentUser.id, courseId: currentCourseId, isCourseCompleted: true })
     });
 
-    // 2. Emite certificado no servidor
-    var certRequest = await fetch(API_BASE + "/api/certificates", {
+    const certRes = await fetch(API_BASE + "/api/certificates", {
       method: "POST",
       headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
       body: JSON.stringify({ userId: currentUser.id, courseId: currentCourseId })
     });
 
-    if (!certRequest.ok) {
+    if (!certRes.ok) {
       throw new Error("Erro ao emitir certificado.");
     }
-
-    var certificate = await certRequest.json();
 
     // 3. Imprime Certificado
     await printCertificate();
@@ -288,7 +279,6 @@ window.concluirCurso = async function () {
       btn.onclick = printCertificate; // Imprimir de novo
     }
   } catch (err) {
-    console.error(err);
     alert("Erro ao emitir certificado.");
     if (btn) {
       btn.disabled = false;
@@ -400,7 +390,8 @@ async function handleContentSubmit(e) {
       document.getElementById("modal-error").style.display = "block";
     }
   } catch (err) {
-    console.error(err);
+    document.getElementById("modal-error").textContent = "Erro ao salvar conteúdo.";
+    document.getElementById("modal-error").style.display = "block";
   }
 }
 
@@ -423,6 +414,6 @@ window.deleteContent = async function () {
       alert("Erro ao excluir conteúdo.");
     }
   } catch (err) {
-    console.error(err);
+    alert("Erro ao excluir conteúdo.");
   }
 };

@@ -43,33 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
             link.parentElement.style.display = 'none';
           }
         });
-
-        const adminActions = document.getElementById('admin-actions');
-        if (adminActions) {
-          adminActions.style.display = 'block';
-
-          const novoCursoBtn = adminActions.querySelector('button');
-          if (novoCursoBtn) {
-            novoCursoBtn.addEventListener('click', () => {
-              const form = document.getElementById("createCourseForm");
-              if (form) form.reset();
-              const idField = document.getElementById("courseId");
-              if (idField) idField.value = "";
-
-              const label = document.getElementById("courseModalLabel");
-              if (label) label.textContent = "Criar Novo Curso";
-
-              const delBtn = document.getElementById("deleteCourseBtn");
-              if (delBtn) delBtn.style.display = "none";
-
-              const errDiv = document.getElementById("modal-error");
-              if (errDiv) errDiv.style.display = "none";
-            });
-          }
-        }
       }
     } catch (e) {
-      console.error("Error parsing user data from localStorage", e);
+      // ignorar erros de parse
     }
   }
 });
