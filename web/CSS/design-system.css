@@ -1,0 +1,161 @@
+/* ═══════════════════════════════════════════════════════════
+   CrescerVerde — Design System
+   Tokens, fontes, animações e utilitários globais
+   ═══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap');
+
+/* ── Tokens ── */
+:root {
+  /* Brand */
+  --cv-primary:         #27ae60;
+  --cv-primary-dark:    #1e8449;
+  --cv-primary-darker:  #1b5e20;
+  --cv-primary-light:   #2ecc71;
+  --cv-primary-subtle:  #e8f5e9;
+  --cv-primary-glow:    rgba(39, 174, 96, 0.18);
+
+  /* Neutrals */
+  --cv-navy:        #2c3e50;
+  --cv-navy-light:  #34495e;
+  --cv-gray-0:      #f8fffe;
+  --cv-gray-1:      #f2f7f4;
+  --cv-gray-2:      #e9f0eb;
+  --cv-gray-3:      #d1dbd4;
+  --cv-gray-4:      #9eb0a4;
+  --cv-gray-5:      #6c8577;
+  --cv-gray-6:      #4a5e52;
+  --cv-text:        #1a2e1a;
+  --cv-text-muted:  #556b55;
+  --cv-text-light:  #ecf0f1;
+
+  /* Accent */
+  --cv-amber:       #f39c12;
+  --cv-amber-dark:  #d68910;
+
+  /* Status */
+  --cv-danger:  #e74c3c;
+  --cv-info:    #3498db;
+
+  /* Border Radius */
+  --r-xs:   4px;
+  --r-sm:   8px;
+  --r-md:   14px;
+  --r-lg:   20px;
+  --r-xl:   28px;
+  --r-full: 9999px;
+
+  /* Shadows */
+  --s-sm:        0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+  --s-md:        0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.04);
+  --s-lg:        0 10px 30px rgba(0,0,0,.10), 0 4px 8px rgba(0,0,0,.05);
+  --s-xl:        0 20px 40px rgba(0,0,0,.13), 0 8px 16px rgba(0,0,0,.06);
+  --s-card:      0 4px 24px rgba(39,174,96,.10), 0 1px 6px rgba(0,0,0,.06);
+  --s-card-hover:0 12px 36px rgba(39,174,96,.22), 0 4px 12px rgba(0,0,0,.08);
+  --s-nav:       0 2px 12px rgba(0,0,0,.20);
+
+  /* Typography */
+  --font-body:    'Inter', 'Arial', sans-serif;
+  --font-display: 'Nunito', 'Arial', sans-serif;
+
+  /* Nav */
+  --nav-h: 68px;
+
+  /* Transitions */
+  --t-fast: 140ms ease;
+  --t-base: 250ms ease;
+  --t-slow: 400ms ease;
+}
+
+/* ── Animations ── */
+@keyframes cv-fade-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cv-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes cv-scale-in {
+  from { opacity: 0; transform: scale(0.93); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes cv-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+/* Animation classes */
+.cv-fade-up  { animation: cv-fade-up  0.5s var(--t-base) both; }
+.cv-fade-in  { animation: cv-fade-in  0.4s var(--t-base) both; }
+.cv-scale-in { animation: cv-scale-in 0.35s var(--t-base) both; }
+
+.cv-delay-1 { animation-delay: 0.08s; }
+.cv-delay-2 { animation-delay: 0.16s; }
+.cv-delay-3 { animation-delay: 0.24s; }
+.cv-delay-4 { animation-delay: 0.32s; }
+
+/* ── Skeleton loader ── */
+.cv-skeleton {
+  background: linear-gradient(90deg, var(--cv-primary-subtle) 25%, #c8e6c9 50%, var(--cv-primary-subtle) 75%);
+  background-size: 200% 100%;
+  animation: cv-shimmer 1.5s infinite;
+  border-radius: var(--r-md);
+}
+
+/* ── Badge ── */
+.cv-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 11px;
+  border-radius: var(--r-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+.cv-badge-green { background: var(--cv-primary-subtle); color: var(--cv-primary-dark); }
+.cv-badge-amber { background: #fff8e1; color: var(--cv-amber-dark); }
+.cv-badge-navy  { background: rgba(44,62,80,.1);  color: var(--cv-navy); }
+
+/* ── Bootstrap variable overrides ── */
+:root {
+  --bs-body-font-family: var(--font-body);
+  --bs-body-color: var(--cv-text);
+  --bs-link-color: var(--cv-primary);
+  --bs-link-hover-color: var(--cv-primary-dark);
+}
+
+/* ── Focus visible ── */
+*:focus-visible {
+  outline: 2px solid var(--cv-primary);
+  outline-offset: 3px;
+}
+
+/* ── Page header (jogos / cursos listing) ── */
+.page-header {
+  background: linear-gradient(135deg, var(--cv-primary-darker) 0%, var(--cv-primary) 100%);
+  color: var(--cv-text-light);
+  padding: 36px 24px 28px;
+  text-align: center;
+}
+.page-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 8px;
+}
+.page-header p {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,.82);
+  margin: 0;
+}
+.page-header h1 i {
+  margin-right: 10px;
+  opacity: 0.9;
+}

@@ -1,28 +1,133 @@
-main {
-    width: 90%;
-    max-width: 1200px;
-    justify-content: center;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.75);
-    border-radius: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 30px;
+/* ═══════════════════════════════════════════════════════════
+   CrescerVerde — Certificados
+   ═══════════════════════════════════════════════════════════ */
+
+.container.my-5 {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: var(--r-lg);
+  box-shadow: var(--s-md);
+  padding: 36px !important;
 }
 
+.page-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: var(--cv-primary-dark);
+  font-size: 1.7rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-title i { opacity: 0.85; }
+
+/* ── Certificate cards ── */
+.cert-card {
+  background: #fff;
+  border: 1px solid rgba(39,174,96,.14);
+  border-radius: var(--r-md);
+  box-shadow: var(--s-card);
+  padding: 22px;
+  transition: transform var(--t-base), box-shadow var(--t-base);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.cert-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--cv-primary-darker), var(--cv-primary-light));
+}
+
+.cert-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--s-card-hover);
+}
+
+.cert-badge {
+  width: 50px;
+  height: 50px;
+  background: var(--cv-primary-subtle);
+  border-radius: var(--r-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.cert-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--cv-text);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.cert-date {
+  font-size: 0.82rem;
+  color: var(--cv-text-muted);
+}
+
+.cert-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--cv-primary-subtle);
+  color: var(--cv-primary-dark);
+  border: none;
+  border-radius: var(--r-full);
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--t-fast), color var(--t-fast);
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+.cert-btn:hover {
+  background: var(--cv-primary);
+  color: #fff;
+}
+
+/* ── Login prompt (not authenticated) ── */
 .primary-text {
-    text-align: center;
-    font-size: 1.5em;
-    margin: 50px 0;
-    color: #2c3e50; /* Cor do texto principal mais escura */
+  text-align: center;
+  font-size: 1.4rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin: 48px 0 24px;
+  color: var(--cv-text);
 }
 
 .login-link {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    text-decoration: none;
-    color: #fff; /* Texto branco */
-    background-color: #27ae60;
-    border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 12px 28px;
+  text-decoration: none;
+  color: #fff;
+  background: var(--cv-primary);
+  border-radius: var(--r-full);
+  font-weight: 700;
+  font-family: var(--font-display);
+  box-shadow: 0 4px 14px rgba(39,174,96,.30);
+  transition: transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
+}
+
+.login-link:hover {
+  background: var(--cv-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(39,174,96,.38);
 }
