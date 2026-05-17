@@ -405,13 +405,13 @@ async function seed() {
     // Apaga trilha existente com mesmo título (idempotente)
     const existing = await Course.findOne({ title: courseData.title });
     if (existing) {
-      await CourseContent.deleteMany({ course: existing._id });
+      await CourseContent.deleteMany({ courseId: existing._id });
       await Course.deleteOne({ _id: existing._id });
       console.log(`🗑️  Removido: ${courseData.title}`);
     }
 
     const course = await Course.create(courseData);
-    await CourseContent.create({ ...contentData, course: course._id });
+    await CourseContent.create({ ...contentData, courseId: course._id });
     console.log(`✅ Criado: ${courseData.emoji} ${courseData.title} [${courseData.minPlan}/${courseData.difficulty}]`);
   }
 
