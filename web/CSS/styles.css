@@ -272,14 +272,19 @@ footer a:hover { color: var(--cv-primary-light); }
 
 #carouselExampleAutoplaying {
   overflow: hidden;
+  max-width: none !important;
+}
+
+#carouselExampleAutoplaying .carousel-inner,
+#carouselExampleAutoplaying .carousel-item {
+  max-width: none !important;
+  width: 100% !important;
 }
 
 #carouselExampleAutoplaying .carousel-item img {
   display: block;
-  width: 100%;
-  aspect-ratio: 1841 / 517;
-  object-fit: cover;
-  object-position: center;
+  width: 100% !important;
+  height: auto !important;
   max-width: none !important;
 }
 
