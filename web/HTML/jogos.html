@@ -48,49 +48,90 @@
     </div>
 
     <main>
-      <div id="admin-actions" class="mb-4" style="display: none">
+      <!-- Filter bar -->
+      <div class="trails-filter" id="trails-filter">
+        <button class="filter-btn active" data-filter="all">Todas</button>
+        <button class="filter-btn" data-filter="iniciante">🟢 Iniciante</button>
+        <button class="filter-btn" data-filter="intermediario">🔵 Intermediário</button>
+        <button class="filter-btn" data-filter="avancado">🔴 Avançado</button>
+      </div>
+
+      <!-- Admin: new trail button -->
+      <div id="admin-actions" class="px-6 mb-3" style="display:none; padding: 0 24px;">
         <button
           class="btn btn-success fw-bold px-4 py-2"
           data-bs-toggle="modal"
           data-bs-target="#courseModal"
+          onclick="resetCourseModal()"
         >
-          + Novo
+          + Nova Trilha
         </button>
       </div>
 
+      <!-- Create / Edit Course Modal -->
       <div class="modal fade" id="courseModal" tabindex="-1" aria-labelledby="courseModalLabel" aria-hidden="true">
-        <div class="modal-dialog" style="color: black">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="courseModalLabel">Criar Jogo</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-dialog modal-dialog-centered" style="color: black">
+          <div class="modal-content border-0 rounded-4 shadow">
+            <div class="modal-header border-bottom-0 bg-light rounded-top-4">
+              <h5 class="modal-title fw-bold text-success" id="courseModalLabel">Nova Trilha</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
             <form id="createCourseForm">
               <input type="hidden" id="courseId" />
-              <div class="modal-body text-start">
-                <div class="mb-3">
-                  <label for="courseTitle" class="form-label">Título do Jogo</label>
-                  <input type="text" class="form-control" id="courseTitle" required />
+              <div class="modal-body text-start p-4">
+                <div class="row g-3">
+                  <div class="col-12">
+                    <label for="courseTitle" class="form-label fw-semibold text-muted small">Título da Trilha</label>
+                    <input type="text" class="form-control bg-light" id="courseTitle" required />
+                  </div>
+                  <div class="col-12">
+                    <label for="courseDescription" class="form-label fw-semibold text-muted small">Descrição</label>
+                    <textarea class="form-control bg-light" id="courseDescription" rows="2" required></textarea>
+                  </div>
+                  <div class="col-6">
+                    <label for="courseEmoji" class="form-label fw-semibold text-muted small">Emoji</label>
+                    <input type="text" class="form-control bg-light" id="courseEmoji" placeholder="🌿" maxlength="4" />
+                  </div>
+                  <div class="col-6">
+                    <label for="courseDifficulty" class="form-label fw-semibold text-muted small">Dificuldade</label>
+                    <select class="form-select bg-light" id="courseDifficulty">
+                      <option value="iniciante">🟢 Iniciante</option>
+                      <option value="intermediario">🔵 Intermediário</option>
+                      <option value="avancado">🔴 Avançado</option>
+                    </select>
+                  </div>
+                  <div class="col-6">
+                    <label for="courseMinPlan" class="form-label fw-semibold text-muted small">Plano Mínimo</label>
+                    <select class="form-select bg-light" id="courseMinPlan">
+                      <option value="free">Gratuito</option>
+                      <option value="familia">Família</option>
+                      <option value="escola">Escola</option>
+                    </select>
+                  </div>
+                  <div class="col-3">
+                    <label for="courseMinutes" class="form-label fw-semibold text-muted small">Duração (min)</label>
+                    <input type="number" class="form-control bg-light" id="courseMinutes" min="1" max="120" placeholder="15" />
+                  </div>
+                  <div class="col-3">
+                    <label for="courseOrder" class="form-label fw-semibold text-muted small">Ordem</label>
+                    <input type="number" class="form-control bg-light" id="courseOrder" min="1" max="99" placeholder="1" />
+                  </div>
+                  <div class="col-12">
+                    <label for="courseCoverImage" class="form-label fw-semibold text-muted small">URL da Imagem de Capa</label>
+                    <input type="url" class="form-control bg-light" id="courseCoverImage" placeholder="https://..." />
+                  </div>
+                  <div class="col-12">
+                    <label for="courseVideoUrl" class="form-label fw-semibold text-muted small">URL do Vídeo</label>
+                    <input type="url" class="form-control bg-light" id="courseVideoUrl" placeholder="https://..." />
+                  </div>
                 </div>
-                <div class="mb-3">
-                  <label for="courseDescription" class="form-label">Descrição</label>
-                  <textarea class="form-control" id="courseDescription" rows="3" required></textarea>
-                </div>
-                <div class="mb-3">
-                  <label for="courseCoverImage" class="form-label">URL da Imagem de Capa</label>
-                  <input type="url" class="form-control" id="courseCoverImage" placeholder="https://exemplo.com/imagem.png" />
-                </div>
-                <div class="mb-3">
-                  <label for="courseVideoUrl" class="form-label">URL do Vídeo</label>
-                  <input type="url" class="form-control" id="courseVideoUrl" placeholder="https://exemplo.com/video.mp4" />
-                </div>
-                <div id="modal-error" class="text-danger mt-2" style="display: none"></div>
+                <div id="modal-error" class="alert alert-danger mt-3 py-2 small" style="display:none"></div>
               </div>
-              <div class="modal-footer d-flex justify-content-between">
-                <button type="button" class="btn btn-danger" id="deleteCourseBtn" style="display: none">Excluir</button>
-                <div>
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                  <button type="submit" class="btn btn-success">Salvar</button>
+              <div class="modal-footer border-top-0 d-flex justify-content-between">
+                <button type="button" class="btn btn-outline-danger" id="deleteCourseBtn" style="display:none">Excluir</button>
+                <div class="d-flex gap-2">
+                  <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                  <button type="submit" class="btn btn-success fw-bold">Salvar</button>
                 </div>
               </div>
             </form>
@@ -98,10 +139,9 @@
         </div>
       </div>
 
-      <div id="courses-container" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mt-2">
-        <div class="col w-100 text-center">
-          <p>Carregando jogos...</p>
-        </div>
+      <!-- Trails grid -->
+      <div id="courses-container" class="trails-grid">
+        <p class="text-center text-muted py-5" style="grid-column:1/-1">Carregando trilhas...</p>
       </div>
     </main>
 

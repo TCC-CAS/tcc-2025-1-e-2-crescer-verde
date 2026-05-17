@@ -6,7 +6,7 @@ const courseSchema = new mongoose.Schema({
   coverImage:       { type: String },
   videoUrl:         { type: String },
   difficulty:       { type: String, enum: ['iniciante', 'intermediario', 'avancado'], default: 'iniciante' },
-  minPlan:          { type: String, enum: ['free', 'basic', 'premium', 'institutional'], default: 'free' },
+  minPlan:          { type: String, enum: ['free', 'familia', 'escola'], default: 'free' },
   category:         { type: String, default: '' },
   emoji:            { type: String, default: '🌿' },
   estimatedMinutes: { type: Number, default: 15 },

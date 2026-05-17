@@ -1,53 +1,204 @@
 /* ═══════════════════════════════════════════════════════════
-   CrescerVerde — Jogos Cards
+   CrescerVerde — Jogos / Trilhas
    ═══════════════════════════════════════════════════════════ */
 
-.card {
+/* ── Trails Filter ─────────────────────────────────────────── */
+.trails-filter {
+  display: flex;
+  gap: 8px;
+  padding: 0 24px 16px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  border-radius: 20px;
+  border: 2px solid var(--cv-green, #27ae60);
+  padding: 6px 18px;
   background: #fff;
-  border: 1px solid rgba(39,174,96,.1);
-  border-radius: var(--r-md);
-  box-shadow: var(--s-card);
-  transition: transform var(--t-base), box-shadow var(--t-base);
+  color: var(--cv-green, #27ae60);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: background 0.15s, color 0.15s;
+  line-height: 1.4;
+}
+
+.filter-btn:hover  { background: #f0faf4; }
+.filter-btn.active { background: var(--cv-green, #27ae60); color: #fff; }
+
+/* ── Trails Grid ────────────────────────────────────────────── */
+.trails-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 0 24px 48px;
+}
+
+/* ── Trail Card ─────────────────────────────────────────────── */
+.trail-card {
+  background: #fff;
+  border: 1px solid rgba(39, 174, 96, 0.12);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  transition: transform 0.18s, box-shadow 0.18s;
+  cursor: pointer;
+  position: relative;
 }
 
-.card:hover {
-  box-shadow: var(--s-card-hover);
+.trail-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(39, 174, 96, 0.16);
 }
 
-.card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  display: block;
+.trail-card.locked { cursor: default; }
+
+.trail-emoji {
+  font-size: 3rem;
+  text-align: center;
+  padding: 22px 16px 8px;
+  line-height: 1;
 }
 
-.card .card-body {
+.trail-body {
+  padding: 8px 18px 18px;
   flex: 1;
-  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
 }
 
-.card .card-title {
-  font-family: var(--font-display);
+.trail-title {
+  font-family: var(--font-display, 'Nunito', sans-serif);
   font-weight: 800;
-  font-size: 1.05rem;
-  color: var(--cv-text);
-  margin-bottom: 7px;
+  font-size: 1rem;
+  color: var(--cv-text, #1a1a1a);
+  margin-bottom: 6px;
 }
 
-.card .card-text {
-  font-size: 0.9rem;
-  color: var(--cv-text-muted);
-  line-height: 1.55;
+.trail-desc {
+  font-size: 0.85rem;
+  color: var(--cv-text-muted, #666);
+  line-height: 1.5;
+  flex: 1;
+  margin-bottom: 12px;
 }
 
-/* ── Mobile ──────────────────────────────────────────────────── */
+/* ── Meta badges ────────────────────────────────────────────── */
+.trail-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.diff-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 20px;
+}
+
+.badge-iniciante { background: #e8f5e9; color: #2e7d32; }
+.badge-inter     { background: #e3f2fd; color: #1565c0; }
+.badge-avanc     { background: #fce4ec; color: #b71c1c; }
+
+.plan-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 20px;
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.trail-time {
+  font-size: 0.75rem;
+  color: var(--cv-text-muted, #888);
+  margin-left: auto;
+}
+
+/* ── Progress bar ───────────────────────────────────────────── */
+.trail-progress {
+  height: 6px;
+  background: #e0e0e0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.trail-progress-bar {
+  height: 100%;
+  background: var(--cv-green, #27ae60);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+/* ── Lock overlay ───────────────────────────────────────────── */
+.trail-locked-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.56);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  backdrop-filter: blur(2px);
+}
+
+.trail-locked-overlay .lock-icon  { font-size: 2.2rem; margin-bottom: 8px; }
+.trail-locked-overlay .lock-label {
+  font-size: 0.8rem;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-align: center;
+  padding: 0 16px;
+}
+
+.trail-locked-overlay .btn-unlock {
+  background: #f9a825;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 7px 18px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.trail-locked-overlay .btn-unlock:hover { background: #f57f17; }
+
+/* ── Admin edit button ──────────────────────────────────────── */
+.trail-edit-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  z-index: 5;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.trail-edit-btn:hover {
+  background: #fff;
+  color: #27ae60;
+  border-color: #27ae60;
+}
+
+/* ── Mobile ─────────────────────────────────────────────────── */
 @media (max-width: 576px) {
-  .card img { height: 160px; }
-  .card .card-body { padding: 12px 14px; }
-  .card .card-title { font-size: 0.95rem; }
-  .card .card-text { font-size: 0.85rem; }
+  .trails-grid   { padding: 0 12px 32px; gap: 14px; }
+  .trails-filter { padding: 0 12px 12px; }
+  .trail-emoji   { font-size: 2.4rem; padding: 16px 12px 6px; }
+  .trail-body    { padding: 6px 14px 14px; }
 }

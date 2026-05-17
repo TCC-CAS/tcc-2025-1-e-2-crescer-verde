@@ -100,7 +100,18 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    /* ── 4. ECA Digital — controle de tempo de sessão para menores ── */
+    /* ── 4. Link Painel para responsáveis (guardians) ── */
+    try {
+      const user = JSON.parse(userStr);
+      if (user?.role === "guardian") {
+        const li = document.createElement("li");
+        li.className = "nav-item";
+        li.innerHTML = '<a class="nav-link" href="/HTML/painel-parental.html"><i class="fas fa-child"></i> Painel</a>';
+        document.getElementById("nav-login")?.closest("li")?.before(li);
+      }
+    } catch (e) {}
+
+    /* ── 5. ECA Digital — controle de tempo de sessão para menores ── */
     try {
       const user = JSON.parse(userStr);
       const limitMinutes = user?.sessionTimeLimitMinutes;
@@ -139,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (navUsuariosLi) navUsuariosLi.style.display = "none";
   }
 
-  /* ── 5. Marca o link ativo no nav conforme a URL atual ── */
+  /* ── 6. Marca o link ativo no nav conforme a URL atual ── */
   document.querySelectorAll("#nav-links .nav-link").forEach(link => {
     try {
       const href = new URL(link.href, window.location.origin).pathname;
@@ -149,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (_) {}
   });
 
-  /* ── 6. Mensagem de pausa ao voltar da sessão expirada ── */
+  /* ── 7. Mensagem de pausa ao voltar da sessão expirada ── */
   if (new URLSearchParams(window.location.search).get("pausa") === "1") {
     const banner = document.createElement("div");
     banner.style.cssText = "position:fixed;top:80px;left:50%;transform:translateX(-50%);background:#1b5e20;color:#fff;padding:14px 28px;border-radius:12px;z-index:9999;font-weight:700;box-shadow:0 4px 16px rgba(0,0,0,0.3);font-size:1rem;";

@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
   },
   plan: {
     type: String,
-    enum: ['free', 'basic', 'premium', 'institutional'],
+    enum: ['free', 'familia', 'escola'],
     default: 'free',
   },
   acceptedTerms: {

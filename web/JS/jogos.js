@@ -1,186 +1,253 @@
-async function loadCourses() {
-  const coursesContainer = document.getElementById("courses-container");
-  coursesContainer.innerHTML = '<div class="col w-100 text-center"><p>Carregando jogos...</p></div>';
+const PLAN_LEVEL = { free: 0, familia: 1, escola: 2 };
+const PLAN_LABEL  = { free: "Gratuito", familia: "Família", escola: "Escola" };
 
-  try {
-    const response = await fetch(API_BASE + "/api/courses");
-    const data = await response.json();
+let allCourses = [];
 
-    if (response.ok) {
-      const courses = data.courses || [];
+function getUserPlan() {
+  try { return JSON.parse(localStorage.getItem("user"))?.plan || "free"; }
+  catch { return "free"; }
+}
 
-      coursesContainer.innerHTML = "";
+function getUserRole() {
+  try { return JSON.parse(localStorage.getItem("user"))?.role || null; }
+  catch { return null; }
+}
 
-      if (courses.length === 0) {
-        coursesContainer.innerHTML = '<div class="col w-100 text-center"><p>Nenhum jogo disponível no momento.</p></div>';
-        return;
-      }
+function getUserId() {
+  try { return JSON.parse(localStorage.getItem("user"))?._id || null; }
+  catch { return null; }
+}
 
-      const userStr = localStorage.getItem("user");
-      let isAdmin = false;
-      if (userStr) {
-        try {
-          const user = JSON.parse(userStr);
-          isAdmin = user.role === 'admin';
-        } catch (e) { console.error(e); }
-      }
+function isLocked(course) {
+  return PLAN_LEVEL[getUserPlan()] < PLAN_LEVEL[course.minPlan || "free"];
+}
 
-      courses.forEach(course => {
-        const imageUrl = course.coverImage || "/Imagens/logo.png";
-        const safeCourseData = encodeURIComponent(JSON.stringify(course));
+function diffBadge(diff) {
+  const map = {
+    iniciante:    '<span class="diff-badge badge-iniciante">🟢 Iniciante</span>',
+    intermediario:'<span class="diff-badge badge-inter">🔵 Intermediário</span>',
+    avancado:     '<span class="diff-badge badge-avanc">🔴 Avançado</span>',
+  };
+  return map[diff] || '';
+}
 
-        const editButton = isAdmin ?
-          `<button class="btn btn-sm btn-outline-secondary mt-2 w-100" onclick="event.stopPropagation(); window.openEditModal('${safeCourseData}')">Editar Jogo</button>` : "";
+/* ── Render ── */
+function renderTrails(courses) {
+  const container = document.getElementById("courses-container");
+  const isAdmin   = getUserRole() === "admin";
 
-        const cardProps = `style="cursor: pointer;" onclick="window.location.href='/HTML/jogo-detalhes.html?id=${course._id}'"`;
+  if (!courses.length) {
+    container.innerHTML = '<p class="text-center text-muted py-5" style="grid-column:1/-1">Nenhuma trilha encontrada.</p>';
+    return;
+  }
 
-        const courseCard = `
-                    <div class="col">
-                        <div class="card h-100" ${cardProps}>
-                            <img src="${imageUrl}" class="card-img-top" alt="${course.title}" style="height: 200px; object-fit: cover;">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title fw-bold">${course.title}</h5>
-                                <p class="card-text text-muted flex-grow-1">${course.description}</p>
-                                ${editButton}
-                            </div>
-                        </div>
-                    </div>
-                `;
-        coursesContainer.innerHTML += courseCard;
+  container.innerHTML = courses.map(c => {
+    const locked    = isLocked(c);
+    const emoji     = c.emoji || "🌿";
+    const plan      = c.minPlan || "free";
+    const planBadge = plan !== "free"
+      ? `<span class="plan-badge">${PLAN_LABEL[plan]}</span>` : "";
+    const timeLabel = c.estimatedMinutes ? `<span class="trail-time">⏱ ${c.estimatedMinutes} min</span>` : "";
+    const editBtn   = isAdmin
+      ? `<button class="trail-edit-btn" onclick="event.stopPropagation(); openEditModal('${c._id}')">✏️ Editar</button>` : "";
+
+    const lockOverlay = locked ? `
+      <div class="trail-locked-overlay">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-label">Disponível no Plano ${PLAN_LABEL[plan]}</div>
+        <button class="btn-unlock" onclick="event.stopPropagation(); window.location.href='/HTML/planos.html'">Ver Planos</button>
+      </div>` : "";
+
+    const clickAttr = locked
+      ? 'class="trail-card locked"'
+      : `class="trail-card" onclick="window.location.href='/HTML/jogo-detalhes.html?id=${c._id}'"`;
+
+    return `
+      <div ${clickAttr} data-diff="${c.difficulty || 'iniciante'}">
+        ${editBtn}
+        <div class="trail-emoji">${emoji}</div>
+        <div class="trail-body">
+          <div class="trail-title">${c.title}</div>
+          <div class="trail-desc">${c.description}</div>
+          <div class="trail-meta">
+            ${diffBadge(c.difficulty)}
+            ${planBadge}
+            ${timeLabel}
+          </div>
+          <div class="trail-progress" id="prog-${c._id}">
+            <div class="trail-progress-bar" style="width:0%"></div>
+          </div>
+        </div>
+        ${lockOverlay}
+      </div>`;
+  }).join("");
+
+  loadAllProgress(courses);
+}
+
+/* ── Progress ── */
+async function loadAllProgress(courses) {
+  const token  = localStorage.getItem("token");
+  const userId = getUserId();
+  if (!token || !userId) return;
+
+  for (const c of courses) {
+    if (isLocked(c)) continue;
+    try {
+      const res = await fetch(`${API_BASE}/api/courseProgress/get?userId=${userId}&courseId=${c._id}`, {
+        headers: { Authorization: `Bearer ${token}` }
       });
-    } else {
-      console.error("Failed to load courses:", data.error);
-      coursesContainer.innerHTML = `<div class="col w-100 text-center"><p class="text-danger">Erro: ${data.error}</p></div>`;
-    }
-  } catch (error) {
-    console.error("Error fetching courses:", error);
-    coursesContainer.innerHTML = '<div class="col w-100 text-center"><p class="text-danger">Erro de conexão com o servidor.</p></div>';
+      if (!res.ok) continue;
+      const { progress } = await res.json();
+      const pct = progress?.percentComplete ?? 0;
+      const bar = document.querySelector(`#prog-${c._id} .trail-progress-bar`);
+      if (bar) bar.style.width = `${pct}%`;
+    } catch {}
   }
 }
 
-window.openEditModal = function (encodedCourseData) {
+/* ── Filters ── */
+function setupFilters() {
+  document.querySelectorAll(".filter-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const filter   = btn.dataset.filter;
+      const filtered = filter === "all"
+        ? allCourses
+        : allCourses.filter(c => c.difficulty === filter);
+      renderTrails(filtered);
+    });
+  });
+}
+
+/* ── Load ── */
+async function loadCourses() {
+  const container = document.getElementById("courses-container");
+  container.innerHTML = '<p class="text-center text-muted py-5" style="grid-column:1/-1">Carregando trilhas...</p>';
   try {
-    const course = JSON.parse(decodeURIComponent(encodedCourseData));
-
-    document.getElementById("courseId").value = course._id;
-    document.getElementById("courseTitle").value = course.title || "";
-    document.getElementById("courseDescription").value = course.description || "";
-    document.getElementById("courseCoverImage").value = course.coverImage || "";
-    document.getElementById("courseVideoUrl").value = course.videoUrl || "";
-
-    document.getElementById("courseModalLabel").textContent = "Editar Jogo";
-    document.getElementById("deleteCourseBtn").style.display = "block";
-
-    document.getElementById("modal-error").style.display = "none";
-
-    const modalElement = document.getElementById('courseModal');
-    const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
-    modalInstance.show();
-  } catch (error) {
-    console.error("Error parsing course data for edit modal:", error);
+    const res  = await fetch(`${API_BASE}/api/courses`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Falha ao carregar");
+    allCourses = (data.courses || []).sort((a, b) => (a.order || 0) - (b.order || 0));
+    renderTrails(allCourses);
+  } catch (err) {
+    container.innerHTML = `<p class="text-center text-danger py-5" style="grid-column:1/-1">Erro ao carregar trilhas: ${err.message}</p>`;
   }
-};
+}
+
+/* ── Admin modal ── */
+function resetCourseModal() {
+  document.getElementById("createCourseForm").reset();
+  document.getElementById("courseId").value          = "";
+  document.getElementById("courseModalLabel").textContent = "Nova Trilha";
+  document.getElementById("deleteCourseBtn").style.display = "none";
+  document.getElementById("modal-error").style.display    = "none";
+}
+
+function openEditModal(courseId) {
+  const c = allCourses.find(x => String(x._id) === String(courseId));
+  if (!c) return;
+
+  document.getElementById("courseId").value          = c._id;
+  document.getElementById("courseTitle").value       = c.title || "";
+  document.getElementById("courseDescription").value = c.description || "";
+  document.getElementById("courseCoverImage").value  = c.coverImage || "";
+  document.getElementById("courseVideoUrl").value    = c.videoUrl || "";
+  document.getElementById("courseEmoji").value       = c.emoji || "";
+  document.getElementById("courseDifficulty").value  = c.difficulty || "iniciante";
+  document.getElementById("courseMinPlan").value     = c.minPlan || "free";
+  document.getElementById("courseMinutes").value     = c.estimatedMinutes || "";
+  document.getElementById("courseOrder").value       = c.order || "";
+
+  document.getElementById("courseModalLabel").textContent  = "Editar Trilha";
+  document.getElementById("deleteCourseBtn").style.display = "block";
+  document.getElementById("modal-error").style.display     = "none";
+
+  new bootstrap.Modal(document.getElementById("courseModal")).show();
+}
+
+window.openEditModal = openEditModal;
 
 window.deleteCourse = async function () {
-  const courseId = document.getElementById("courseId").value;
-  if (!courseId) return;
-
-  if (!confirm("Tem certeza que deseja excluir permanentemente este jogo?")) return;
+  const id = document.getElementById("courseId").value;
+  if (!id || !confirm("Excluir esta trilha permanentemente?")) return;
 
   const token = localStorage.getItem("token");
-  if (!token) return alert("Usuário não autenticado.");
+  if (!token) return alert("Não autenticado.");
 
   try {
-    const response = await fetch(`${API_BASE}/api/courses/${courseId}`, {
+    const res = await fetch(`${API_BASE}/api/courses/${id}`, {
       method: "DELETE",
-      headers: {
-        "Authorization": `Bearer ${token}`
-      }
+      headers: { Authorization: `Bearer ${token}` }
     });
-
-    if (response.ok) {
-      const modalElement = document.getElementById('courseModal');
-      const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
-      modalInstance.hide();
+    if (res.ok) {
+      bootstrap.Modal.getInstance(document.getElementById("courseModal"))?.hide();
       loadCourses();
     } else {
-      const data = await response.json();
-      alert(data.error || "Erro ao deletar jogo");
+      const d = await res.json();
+      alert(d.error || "Erro ao deletar trilha.");
     }
-  } catch (error) {
-    console.error("Error deleting course", error);
-    alert("Erro de conexão com o servidor ao excluir.");
-  }
+  } catch { alert("Erro de conexão."); }
 };
 
+/* ── DOMContentLoaded ── */
 document.addEventListener("DOMContentLoaded", () => {
+  if (getUserRole() === "admin") {
+    const adminActions = document.getElementById("admin-actions");
+    if (adminActions) adminActions.style.display = "block";
+  }
+
+  setupFilters();
   loadCourses();
 
-  const deleteCourseBtn = document.getElementById("deleteCourseBtn");
-  if (deleteCourseBtn) {
-    deleteCourseBtn.addEventListener("click", window.deleteCourse);
-  }
+  document.getElementById("deleteCourseBtn")?.addEventListener("click", window.deleteCourse);
 
-  const createCourseForm = document.getElementById("createCourseForm");
-  if (createCourseForm) {
-    createCourseForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+  document.getElementById("createCourseForm")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const errorDiv = document.getElementById("modal-error");
+    errorDiv.style.display = "none";
 
-      const courseId = document.getElementById("courseId").value;
-      const title = document.getElementById("courseTitle").value;
-      const description = document.getElementById("courseDescription").value;
-      const coverImage = document.getElementById("courseCoverImage").value;
-      const videoUrl = document.getElementById("courseVideoUrl").value;
-      const errorDiv = document.getElementById("modal-error");
+    const token = localStorage.getItem("token");
+    if (!token) {
+      errorDiv.textContent = "Não autenticado.";
+      errorDiv.style.display = "block";
+      return;
+    }
 
-      errorDiv.style.display = "none";
-      errorDiv.textContent = "";
+    const id      = document.getElementById("courseId").value;
+    const payload = {
+      title:            document.getElementById("courseTitle").value,
+      description:      document.getElementById("courseDescription").value,
+      coverImage:       document.getElementById("courseCoverImage").value || null,
+      videoUrl:         document.getElementById("courseVideoUrl").value || null,
+      emoji:            document.getElementById("courseEmoji").value || "🌿",
+      difficulty:       document.getElementById("courseDifficulty").value,
+      minPlan:          document.getElementById("courseMinPlan").value,
+      estimatedMinutes: parseInt(document.getElementById("courseMinutes").value) || 15,
+      order:            parseInt(document.getElementById("courseOrder").value) || 0,
+    };
 
-      const token = localStorage.getItem("token");
-      if (!token) {
-        errorDiv.textContent = "Erro: Usuário não autenticado.";
-        errorDiv.style.display = "block";
-        return;
-      }
+    try {
+      const url    = id ? `${API_BASE}/api/courses/${id}` : `${API_BASE}/api/courses`;
+      const method = id ? "PUT" : "POST";
+      const res    = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
 
-      try {
-        const url = courseId ? `${API_BASE}/api/courses/${courseId}` : API_BASE + "/api/courses";
-        const method = courseId ? "PUT" : "POST";
-
-        const response = await fetch(url, {
-          method: method,
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            title,
-            description,
-            coverImage: coverImage || null,
-            videoUrl: videoUrl || null
-          })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          createCourseForm.reset();
-          document.getElementById("courseId").value = "";
-
-          const modalElement = document.getElementById('courseModal');
-          const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
-          modalInstance.hide();
-
-          loadCourses();
-        } else {
-          errorDiv.textContent = data.error || "Erro ao salvar curso.";
-          errorDiv.style.display = "block";
-        }
-      } catch (error) {
-        console.error("Error saving course:", error);
-        errorDiv.textContent = "Erro de conexão com o servidor.";
+      if (res.ok) {
+        bootstrap.Modal.getInstance(document.getElementById("courseModal"))?.hide();
+        loadCourses();
+      } else {
+        errorDiv.textContent = data.error || "Erro ao salvar trilha.";
         errorDiv.style.display = "block";
       }
-    });
-  }
+    } catch {
+      errorDiv.textContent = "Erro de conexão.";
+      errorDiv.style.display = "block";
+    }
+  });
 });

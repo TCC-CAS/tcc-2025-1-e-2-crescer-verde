@@ -3,8 +3,8 @@ let currentUserIdToDelete = null;
 let lastCreatedUserId = null;
 let globalUsersData = [];
 
-const PLAN_LABEL = { free: 'Gratuito', basic: 'Básico', premium: 'Premium', institutional: 'Institucional' };
-const PLAN_COLOR = { free: '#27ae60', basic: '#2980b9', premium: '#f39c12', institutional: '#8e44ad' };
+const PLAN_LABEL = { free: 'Gratuito', familia: 'Família', escola: 'Escola' };
+const PLAN_COLOR = { free: '#27ae60', familia: '#2980b9', escola: '#8e44ad' };
 
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("token");
