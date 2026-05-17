@@ -35,12 +35,15 @@ const getByUserId = async (req, res) => {
       return res.status(403).json({ message: 'Acesso negado' });
     }
 
-    const certificates = await Certificate.find({ user: userId }).lean();
+    const certificates = await Certificate.find({ user: userId })
+      .populate('course', 'title')
+      .lean();
+
     const response = certificates.map(c => ({
       _id: c._id,
-      courseId: c.course,
-      userId: c.user,
-      date: c.date,
+      courseId: c.course?._id,
+      courseName: c.course?.title || 'Curso Indisponível',
+      date: c.date || c.createdAt,
     }));
     res.status(200).json(response);
   } catch (err) {
