@@ -12,5 +12,8 @@
   },
   "dependencies": {
     "jimp": "^1.6.1"
+  },
+  "devDependencies": {
+    "mammoth": "^1.12.0"
   }
 }

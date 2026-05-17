@@ -276,6 +276,14 @@ footer a:hover { color: var(--cv-primary-light); }
   width: 100%;
   height: auto;
   display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 768px) {
+  #carouselExampleAutoplaying .carousel-item img {
+    min-height: 220px;
+  }
 }
 
 #carouselExampleAutoplaying .quiz-slide { aspect-ratio: 1841 / 517; }
