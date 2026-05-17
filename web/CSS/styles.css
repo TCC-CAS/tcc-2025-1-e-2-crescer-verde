@@ -272,20 +272,26 @@ footer a:hover { color: var(--cv-primary-light); }
 
 #carouselExampleAutoplaying {
   overflow: hidden;
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 #carouselExampleAutoplaying .carousel-item img {
-  width: 100%;
-  height: auto;
   display: block;
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  object-position: center;
+  max-width: none !important;
 }
 
-#carouselExampleAutoplaying .quiz-slide { aspect-ratio: 1841 / 517; }
-#carouselExampleAutoplaying .quiz-slide > div { height: 100%; width: 100%; }
+#carouselExampleAutoplaying .quiz-slide {
+  height: 420px;
+  aspect-ratio: unset;
+}
+
+#carouselExampleAutoplaying .quiz-slide > div {
+  height: 100%;
+  width: 100%;
+}
 
 /* ── Mobile fixes ────────────────────────────────────────────── */
 
