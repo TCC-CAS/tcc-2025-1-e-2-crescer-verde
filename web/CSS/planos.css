@@ -147,9 +147,10 @@
 
 .plans-note {
   text-align: center;
-  color: #888;
+  color: #555;
   font-size: 0.85rem;
-  padding: 0 24px 40px;
+  padding: 16px 24px 40px;
+  background: #fff;
 }
 
 @media (max-width: 600px) {

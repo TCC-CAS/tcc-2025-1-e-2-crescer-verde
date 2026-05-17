@@ -3,12 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="icon"
-      href="/Imagens/EarthPNG.png"
-      sizes="16x16"
-      type="image/png"
-    />
+    <link rel="icon" href="/Imagens/EarthPNG.png" sizes="16x16" type="image/png" />
     <title>Gerenciar Usuários | CrescerVerde</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,6 +14,26 @@
     <link rel="stylesheet" href="/CSS/design-system.css" />
     <link rel="stylesheet" href="/CSS/styles.css" />
     <link rel="stylesheet" href="/CSS/usuarios.css" />
+    <style>
+      .guardian-of-scroll {
+        max-height: 160px;
+        overflow-y: auto;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 10px 12px;
+        background: #f8f9fa;
+      }
+      .plan-dot {
+        display: inline-block;
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        margin-right: 5px;
+      }
+      .plan-dot.free         { background:#27ae60; }
+      .plan-dot.basic        { background:#2980b9; }
+      .plan-dot.premium      { background:#f39c12; }
+      .plan-dot.institutional{ background:#8e44ad; }
+    </style>
   </head>
 
   <body>
@@ -49,45 +64,23 @@
     </nav>
 
     <main class="container py-5">
-      <div
-        class="d-flex justify-content-between align-items-center mb-4 text-white"
-      >
+      <div class="d-flex justify-content-between align-items-center mb-4 text-white">
         <h2 class="mb-0">Usuários</h2>
         <div class="d-flex gap-3">
-          <select
-            id="role-filter"
-            class="form-select form-select-sm shadow-sm"
-            style="width: 150px"
-            onchange="filterUsersByRole()"
-          >
-            <option value="all">Todos (Cargos)</option>
+          <select id="role-filter" class="form-select form-select-sm shadow-sm" style="width:170px" onchange="filterUsersByRole()">
+            <option value="all">Todos</option>
             <option value="admin">Administrador</option>
-            <option value="user">Usuário Padrão</option>
+            <option value="user">Aluno / Usuário</option>
             <option value="guardian">Responsável</option>
           </select>
-          <button
-            class="btn btn-light shadow-sm fw-bold text-success"
-            data-bs-toggle="modal"
-            data-bs-target="#userModal"
-            onclick="resetUserModal()"
-          >
+          <button class="btn btn-light shadow-sm fw-bold text-success" data-bs-toggle="modal" data-bs-target="#userModal" onclick="resetUserModal()">
             <i class="bi bi-person-plus-fill me-2"></i>Novo
           </button>
         </div>
       </div>
 
-      <div
-        id="error-message"
-        class="alert alert-danger"
-        style="display: none"
-        role="alert"
-      ></div>
-      <div
-        id="success-message"
-        class="alert alert-success"
-        style="display: none"
-        role="alert"
-      ></div>
+      <div id="error-message" class="alert alert-danger" style="display:none" role="alert"></div>
+      <div id="success-message" class="alert alert-success" style="display:none" role="alert"></div>
 
       <div class="card shadow rounded-4 border-0">
         <div class="card-body p-0">
@@ -98,15 +91,13 @@
                   <th class="ps-4">Nome</th>
                   <th>Email</th>
                   <th>Tipo</th>
+                  <th>Plano</th>
+                  <th>Vínculos</th>
                   <th class="text-end pe-4">Ações</th>
                 </tr>
               </thead>
               <tbody id="users-table-body">
-                <tr>
-                  <td colspan="4" class="text-center py-4">
-                    Carregando usuários...
-                  </td>
-                </tr>
+                <tr><td colspan="6" class="text-center py-4">Carregando usuários...</td></tr>
               </tbody>
             </table>
           </div>
@@ -115,82 +106,80 @@
     </main>
 
     <!-- Create / Edit User Modal -->
-    <div
-      class="modal fade"
-      id="userModal"
-      tabindex="-1"
-      aria-labelledby="userModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
+    <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 rounded-4 shadow">
           <div class="modal-header border-bottom-0 bg-light rounded-top-4">
-            <h5 class="modal-title fw-bold text-success" id="userModalLabel">
-              Novo Usuário
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            <h5 class="modal-title fw-bold text-success" id="userModalLabel">Novo Usuário</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body p-4">
             <form id="user-form">
               <input type="hidden" id="user-id" />
 
-              <div class="mb-3">
-                <label for="user-name" class="form-label fw-semibold text-muted small">Nome Completo</label>
-                <input type="text" class="form-control form-control-lg bg-light" id="user-name" required />
-              </div>
-
-              <div class="mb-3">
-                <label for="user-email" class="form-label fw-semibold text-muted small">E-mail</label>
-                <input type="email" class="form-control form-control-lg bg-light" id="user-email" required />
-              </div>
-
-              <div class="mb-3" id="password-container">
-                <label for="user-password" class="form-label fw-semibold text-muted small" id="password-label">Senha</label>
-                <input
-                  type="text"
-                  class="form-control form-control-lg bg-light text-success fw-bold font-monospace"
-                  id="user-password"
-                  readonly
-                  placeholder="Gerada automaticamente ao salvar"
-                />
-                <div class="form-text" id="password-help">
-                  Uma senha aleatória segura será atribuída ao novo usuário.
-                  Copie a senha do alerta de sucesso para enviar ao usuário.
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="user-name" class="form-label fw-semibold text-muted small">Nome Completo</label>
+                  <input type="text" class="form-control bg-light" id="user-name" required />
+                </div>
+                <div class="col-md-6">
+                  <label for="user-email" class="form-label fw-semibold text-muted small">E-mail</label>
+                  <input type="email" class="form-control bg-light" id="user-email" required />
                 </div>
               </div>
 
-              <div class="mb-3">
-                <label for="user-role" class="form-label fw-semibold text-muted small">Cargo</label>
-                <select class="form-select form-select-lg bg-light" id="user-role" required onchange="onRoleChange()">
-                  <option value="user">Usuário Padrão</option>
-                  <option value="admin">Administrador (Admin)</option>
-                  <option value="guardian">Responsável (Parental)</option>
+              <div class="mb-3 mt-3" id="password-container">
+                <label for="user-password" class="form-label fw-semibold text-muted small">Senha</label>
+                <input type="text" class="form-control bg-light text-success fw-bold font-monospace" id="user-password" readonly placeholder="Gerada automaticamente ao salvar" />
+                <div class="form-text">Uma senha aleatória segura será atribuída. Copie do alerta de sucesso para enviar ao usuário.</div>
+              </div>
+
+              <div class="row g-3 mt-0">
+                <div class="col-md-4">
+                  <label for="user-role" class="form-label fw-semibold text-muted small">Tipo de Conta</label>
+                  <select class="form-select bg-light" id="user-role" required onchange="onRoleChange()">
+                    <option value="user">Aluno / Usuário</option>
+                    <option value="guardian">Responsável</option>
+                    <option value="admin">Administrador</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="user-plan" class="form-label fw-semibold text-muted small">Nível de Acesso (Plano)</label>
+                  <select class="form-select bg-light" id="user-plan">
+                    <option value="free">Gratuito</option>
+                    <option value="basic">Básico</option>
+                    <option value="premium">Premium</option>
+                    <option value="institutional">Institucional</option>
+                  </select>
+                </div>
+                <div class="col-md-4 d-flex align-items-end" id="minor-container">
+                  <div class="form-check pb-2">
+                    <input type="checkbox" class="form-check-input" id="user-is-minor" onchange="onIsMinorChange()">
+                    <label class="form-check-label fw-semibold text-muted small" for="user-is-minor">É menor de idade</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Dropdown de responsável — aparece quando aluno é menor -->
+              <div class="mb-3 mt-3" id="responsavel-container" style="display:none">
+                <label for="responsavel-select" class="form-label fw-semibold text-muted small">
+                  <i class="bi bi-person-heart me-1 text-warning"></i>Responsável vinculado
+                </label>
+                <select class="form-select bg-light" id="responsavel-select">
+                  <option value="">— Nenhum responsável —</option>
                 </select>
+                <div class="form-text">Ao vincular, o responsável poderá acompanhar este aluno no painel parental.</div>
               </div>
 
-              <div class="mb-3" id="plan-container">
-                <label for="user-plan" class="form-label fw-semibold text-muted small">Plano</label>
-                <select class="form-select form-select-lg bg-light" id="user-plan">
-                  <option value="free">Gratuito</option>
-                  <option value="basic">Básico</option>
-                  <option value="premium">Premium</option>
-                  <option value="institutional">Institucional</option>
-                </select>
-              </div>
-
-              <div class="mb-3 form-check" id="minor-container">
-                <input type="checkbox" class="form-check-input" id="user-is-minor">
-                <label class="form-check-label fw-semibold text-muted small" for="user-is-minor">Usuário menor de idade</label>
-              </div>
-
-              <div class="mb-3" id="guardian-email-container" style="display:none">
-                <label for="user-guardian-email" class="form-label fw-semibold text-muted small">E-mail do Responsável</label>
-                <input type="email" class="form-control bg-light" id="user-guardian-email" placeholder="responsavel@email.com" />
+              <!-- Checklist de alunos — aparece quando tipo = Responsável -->
+              <div class="mb-3 mt-3" id="guardian-of-container" style="display:none">
+                <label class="form-label fw-semibold text-muted small">
+                  <i class="bi bi-people-fill me-1 text-primary"></i>Alunos vinculados a este responsável
+                </label>
+                <div class="guardian-of-scroll" id="guardian-of-list">
+                  <small class="text-muted">Nenhum aluno menor cadastrado ainda.</small>
+                </div>
+                <div class="form-text">Marque os alunos que este responsável pode acompanhar.</div>
               </div>
 
               <!-- Aceite de termos (somente no cadastro) -->
@@ -202,10 +191,8 @@
                 </label>
               </div>
 
-              <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-success btn-lg shadow-sm w-100 fw-bold">
-                  Salvar
-                </button>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-success btn-lg shadow-sm fw-bold">Salvar</button>
               </div>
             </form>
           </div>
@@ -220,11 +207,7 @@
           <div class="modal-body text-center p-4">
             <i class="bi bi-exclamation-circle text-danger display-1 mb-3"></i>
             <h5 class="fw-bold mb-3">Confirmar Exclusão</h5>
-            <p class="text-muted mb-4">
-              Tem certeza que deseja excluir o usuário
-              <strong id="delete-user-name"></strong>? Esta ação não pode ser
-              desfeita.
-            </p>
+            <p class="text-muted mb-4">Tem certeza que deseja excluir <strong id="delete-user-name"></strong>? Esta ação não pode ser desfeita.</p>
             <div class="d-flex gap-2 justify-content-center">
               <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Cancelar</button>
               <button type="button" class="btn btn-danger px-4 shadow-sm" id="confirm-delete-btn">Excluir</button>
@@ -245,30 +228,16 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body p-4 text-center">
-            <p class="text-muted mb-3">
-              Copie a senha temporária abaixo e envie para o novo usuário.
-            </p>
-
+            <p class="text-muted mb-3">Copie a senha temporária abaixo e envie para o novo usuário.</p>
             <div class="input-group mb-3 d-flex justify-content-center">
-              <input
-                type="text"
-                id="generatedPasswordDisplay"
-                class="form-control form-control-lg bg-light text-center fw-bold font-monospace border-success"
-                readonly
-              />
+              <input type="text" id="generatedPasswordDisplay" class="form-control form-control-lg bg-light text-center fw-bold font-monospace border-success" readonly />
             </div>
-
             <button id="copyPasswordBtn" class="btn btn-success btn-lg shadow-sm w-100 fw-bold mb-3">
               <i class="bi bi-copy me-2"></i>Copiar Senha
             </button>
-
             <hr class="my-2">
             <p class="text-muted small mb-2">Quer definir uma senha personalizada agora?</p>
-            <button
-              type="button"
-              class="btn btn-outline-success w-100 fw-semibold"
-              id="openChangePasswordBtn"
-            >
+            <button type="button" class="btn btn-outline-success w-100 fw-semibold" id="openChangePasswordBtn">
               <i class="bi bi-key-fill me-2"></i>Trocar Senha
             </button>
           </div>
@@ -281,9 +250,7 @@
       <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content border-0 rounded-4 shadow">
           <div class="modal-header border-bottom-0 bg-light rounded-top-4">
-            <h5 class="modal-title fw-bold text-success">
-              <i class="bi bi-key-fill me-2"></i>Trocar Senha
-            </h5>
+            <h5 class="modal-title fw-bold text-success"><i class="bi bi-key-fill me-2"></i>Trocar Senha</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body p-4">
@@ -318,16 +285,8 @@
       </p>
     </footer>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
     <script src="../JS/config.js"></script>
     <script src="../JS/global.js"></script>
     <script src="../JS/usuarios.js"></script>
