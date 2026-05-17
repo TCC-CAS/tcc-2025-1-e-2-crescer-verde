@@ -5,7 +5,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap');
 
-/* ── Tokens ── */
 :root {
   /* Brand */
   --cv-primary:         #27ae60;
@@ -67,7 +66,6 @@
   --t-slow: 400ms ease;
 }
 
-/* ── Animations ── */
 @keyframes cv-fade-up {
   from { opacity: 0; transform: translateY(22px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -98,7 +96,6 @@
 .cv-delay-3 { animation-delay: 0.24s; }
 .cv-delay-4 { animation-delay: 0.32s; }
 
-/* ── Skeleton loader ── */
 .cv-skeleton {
   background: linear-gradient(90deg, var(--cv-primary-subtle) 25%, #c8e6c9 50%, var(--cv-primary-subtle) 75%);
   background-size: 200% 100%;
@@ -106,7 +103,6 @@
   border-radius: var(--r-md);
 }
 
-/* ── Badge ── */
 .cv-badge {
   display: inline-flex;
   align-items: center;
@@ -122,7 +118,6 @@
 .cv-badge-amber { background: #fff8e1; color: var(--cv-amber-dark); }
 .cv-badge-navy  { background: rgba(44,62,80,.1);  color: var(--cv-navy); }
 
-/* ── Bootstrap variable overrides ── */
 :root {
   --bs-body-font-family: var(--font-body);
   --bs-body-color: var(--cv-text);
@@ -130,28 +125,26 @@
   --bs-link-hover-color: var(--cv-primary-dark);
 }
 
-/* ── Focus visible ── */
 *:focus-visible {
   outline: 2px solid var(--cv-primary);
   outline-offset: 3px;
 }
 
-/* ── Page header (jogos / cursos listing) ── */
 .page-header {
   background: linear-gradient(135deg, var(--cv-primary-darker) 0%, var(--cv-primary) 100%);
   color: var(--cv-text-light);
-  padding: 20px 24px 16px;
+  padding: 28px 24px 22px;
   text-align: center;
 }
 .page-header h1 {
   font-family: var(--font-display);
-  font-size: clamp(1.3rem, 2.5vw, 1.65rem);
+  font-size: clamp(1.5rem, 3vw, 1.9rem);
   font-weight: 800;
   color: #fff;
   margin: 0 0 6px;
 }
 .page-header p {
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: rgba(255,255,255,.82);
   margin: 0;
 }

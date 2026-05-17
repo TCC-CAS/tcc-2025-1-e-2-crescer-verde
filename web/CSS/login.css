@@ -2,7 +2,6 @@
    CrescerVerde — Login Page
    ═══════════════════════════════════════════════════════════ */
 
-/* ── Wrapper que centraliza o card na página ── */
 .login-wrapper {
   flex: 1;
   display: flex;
@@ -12,7 +11,6 @@
   min-height: calc(100vh - var(--nav-h) - 80px);
 }
 
-/* ── Card do formulário ── */
 .form {
   width: 100%;
   max-width: 420px;
@@ -24,7 +22,6 @@
   animation: cv-scale-in 0.3s ease both;
 }
 
-/* ── Cabeçalho do form ── */
 .form-header {
   text-align: center;
   margin-bottom: 30px;
@@ -56,7 +53,6 @@
   margin: 0;
 }
 
-/* ── Labels ── */
 .form label {
   display: block;
   font-weight: 600;
@@ -65,7 +61,6 @@
   margin-bottom: 6px;
 }
 
-/* ── Inputs ── */
 .form input[type="email"],
 .form input[type="password"],
 .form input[type="text"] {
@@ -94,7 +89,6 @@
   box-shadow: 0 0 0 3px var(--cv-primary-glow);
 }
 
-/* ── Botão submit ── */
 .submit-btn,
 .form button[type="submit"] {
   display: block;
@@ -128,7 +122,6 @@
   transform: translateY(0);
 }
 
-/* ── Link "Esqueci minha senha" ── */
 .forgot-link,
 #forgot-password-link {
   display: block;
@@ -146,7 +139,6 @@
   color: var(--cv-primary-darker);
 }
 
-/* ── Mensagem de erro ── */
 #login-error {
   margin-top: 14px;
   padding: 10px 14px;

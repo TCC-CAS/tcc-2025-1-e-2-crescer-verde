@@ -23,7 +23,6 @@
 
 .page-title i { opacity: 0.85; }
 
-/* ── Certificate cards ── */
 .cert-card {
   background: #fff;
   border: 1px solid rgba(39,174,96,.14);
@@ -35,16 +34,6 @@
   flex-direction: column;
   gap: 12px;
   height: 100%;
-  position: relative;
-  overflow: hidden;
-}
-
-.cert-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--cv-primary-darker), var(--cv-primary-light));
 }
 
 .cert-card:hover {
@@ -100,7 +89,6 @@
   color: #fff;
 }
 
-/* ── Login prompt (not authenticated) ── */
 .primary-text {
   text-align: center;
   font-size: 1.4rem;
