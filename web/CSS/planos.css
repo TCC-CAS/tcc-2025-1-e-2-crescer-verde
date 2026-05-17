@@ -1,8 +1,7 @@
 :root {
-  --plan-free:        #27ae60;
-  --plan-basic:       #2980b9;
-  --plan-premium:     #f39c12;
-  --plan-institutional: #8e44ad;
+  --plan-free:    #27ae60;
+  --plan-familia: #2980b9;
+  --plan-escola:  #8e44ad;
 }
 
 .plans-header {
@@ -27,9 +26,9 @@
 
 .plans-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 24px;
-  max-width: 1100px;
+  max-width: 900px;
   margin: 40px auto;
   padding: 0 24px;
 }
@@ -44,20 +43,17 @@
   position: relative;
 }
 
-.plan-card-top {
-  height: 6px;
-}
+.plan-card-top { height: 6px; }
 
 .plan-card.free    .plan-card-top { background: var(--plan-free); }
-.plan-card.basic   .plan-card-top { background: var(--plan-basic); }
-.plan-card.premium .plan-card-top { background: var(--plan-premium); }
-.plan-card.institutional .plan-card-top { background: var(--plan-institutional); }
+.plan-card.familia .plan-card-top { background: var(--plan-familia); }
+.plan-card.escola  .plan-card-top { background: var(--plan-escola); }
 
 .plan-badge {
   position: absolute;
   top: 18px;
   right: 16px;
-  background: var(--plan-basic);
+  background: var(--plan-familia);
   color: #fff;
   font-size: 0.72rem;
   font-weight: 800;
@@ -73,10 +69,7 @@
   flex-direction: column;
 }
 
-.plan-icon {
-  font-size: 2.2rem;
-  margin-bottom: 10px;
-}
+.plan-icon { font-size: 2.2rem; margin-bottom: 10px; }
 
 .plan-name {
   font-family: 'Nunito', sans-serif;
@@ -94,17 +87,9 @@
   line-height: 1;
 }
 
-.plan-price span {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #666;
-}
+.plan-price span { font-size: 0.95rem; font-weight: 600; color: #666; }
 
-.plan-desc {
-  font-size: 0.85rem;
-  color: #777;
-  margin: 0 0 18px;
-}
+.plan-desc { font-size: 0.85rem; color: #777; margin: 0 0 18px; }
 
 .plan-features {
   list-style: none;
@@ -123,8 +108,8 @@
 }
 
 .plan-features li.yes::before { content: '✓'; color: #27ae60; font-weight: 800; font-size: 1rem; }
-.plan-features li.no::before  { content: '✗'; color: #bbb; font-weight: 800; font-size: 1rem; }
-.plan-features li.no  { color: #aaa; }
+.plan-features li.no::before  { content: '✗'; color: #bbb;    font-weight: 800; font-size: 1rem; }
+.plan-features li.no { color: #aaa; }
 
 .plan-cta {
   display: block;
@@ -140,10 +125,9 @@
 
 .plan-cta:hover { opacity: 0.85; }
 
-.plan-card.free    .plan-cta { background: var(--plan-free);          color: #fff; }
-.plan-card.basic   .plan-cta { background: var(--plan-basic);         color: #fff; }
-.plan-card.premium .plan-cta { background: var(--plan-premium);       color: #fff; }
-.plan-card.institutional .plan-cta { background: var(--plan-institutional); color: #fff; }
+.plan-card.free    .plan-cta { background: var(--plan-free);    color: #fff; }
+.plan-card.familia .plan-cta { background: var(--plan-familia); color: #fff; }
+.plan-card.escola  .plan-cta { background: var(--plan-escola);  color: #fff; }
 
 .plans-note {
   text-align: center;
@@ -159,9 +143,7 @@
   text-decoration: none;
 }
 
-.plans-note a:hover {
-  text-decoration: underline;
-}
+.plans-note a:hover { text-decoration: underline; }
 
 @media (max-width: 600px) {
   .plans-grid { gap: 16px; }
@@ -177,12 +159,8 @@
   }
 
   .plan-body { padding: 18px 14px 16px; }
-
   .plan-price { font-size: 1.65rem; }
-
   .plan-features li { font-size: 0.85rem; padding: 4px 0; }
-
   .plan-cta { padding: 11px 16px; font-size: 0.9rem; }
-
   .plans-note { padding: 12px 14px 28px; font-size: 0.82rem; }
 }
