@@ -277,7 +277,9 @@ footer a:hover { color: var(--cv-primary-light); }
 #carouselExampleAutoplaying .carousel-item img {
   display: block;
   width: 100%;
-  height: auto;
+  aspect-ratio: 1841 / 517;
+  object-fit: cover;
+  object-position: center;
   max-width: none !important;
 }
 
