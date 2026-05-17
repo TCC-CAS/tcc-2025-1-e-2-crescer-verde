@@ -1,0 +1,13 @@
+{
+  "name": "crescerverde",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "api",
+    "web"
+  ],
+  "scripts": {
+    "start": "npm run start --workspace=api",
+    "start:api": "npm run start --workspace=api"
+  }
+}

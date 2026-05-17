@@ -3,5 +3,22 @@ node_modules/
 .env.*
 !.env.example
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 .DS_Store
 Thumbs.db
+.claude/
+
+# Build outputs
+.next/
+dist/
+out/
+build/
+
+# Vercel
+.vercel/
+
+# Cache
+.cache/
+.parcel-cache/
+*.tsbuildinfo
