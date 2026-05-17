@@ -45,14 +45,11 @@ small, .text-sm { font-size: 0.875rem; }
 }
 
 .navbar.scrolled {
-  box-shadow: 0 4px 24px rgba(0,0,0,.32);
-  background: rgba(44, 62, 80, 0.97);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0,0,0,.28);
 }
 
 .navbar-brand img {
-  height: 46px;
+  height: 54px;
   width: auto;
   display: block;
 }
@@ -76,11 +73,11 @@ small, .text-sm { font-size: 0.875rem; }
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 14px;
+  padding: 10px 16px;
   border-radius: var(--r-sm);
   color: rgba(236, 240, 241, 0.82);
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 500;
   transition: background var(--t-fast), color var(--t-fast);
   white-space: nowrap;
@@ -102,13 +99,12 @@ small, .text-sm { font-size: 0.875rem; }
   background: var(--cv-primary);
   color: #fff;
   font-weight: 700;
-  padding: 8px 20px;
+  padding: 10px 22px;
   margin-left: 8px;
   border-radius: var(--r-full);
 }
 #nav-links .nav-link.nav-btn:hover {
   background: var(--cv-primary-light);
-  transform: translateY(-1px);
 }
 
 /* Hamburger button */
@@ -192,7 +188,6 @@ small, .text-sm { font-size: 0.875rem; }
 .hero-content {
   max-width: 720px;
   margin: 0 auto;
-  animation: cv-fade-up 0.6s ease both;
 }
 
 .hero h1 {
@@ -217,49 +212,37 @@ small, .text-sm { font-size: 0.875rem; }
 .hero2 {
   background: linear-gradient(135deg, var(--cv-primary) 0%, var(--cv-primary-dark) 100%);
   color: var(--cv-text-light);
-  padding: 36px 24px;
+  padding: 18px 24px;
   text-align: center;
 }
 
 .hero2 p {
   font-family: var(--font-display);
-  font-size: 1.15rem;
-  margin: 0 0 22px;
+  font-size: 1rem;
+  margin: 0 0 14px;
   opacity: 0.92;
 }
 
 .cta-button {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 15px 34px;
-  font-size: 1.05rem;
+  gap: 8px;
+  padding: 11px 26px;
+  font-size: 0.95rem;
   font-family: var(--font-display);
   font-weight: 800;
   color: var(--cv-primary-darker);
   background: #fff;
   border-radius: var(--r-full);
   text-decoration: none;
-  box-shadow: 0 6px 24px rgba(0,0,0,.16);
-  transition: transform var(--t-base), box-shadow var(--t-base), background var(--t-fast);
-  letter-spacing: 0.2px;
-}
-
-.cta-button i { opacity: 0.85; }
-
-.cta-button .cta-arrow {
-  display: inline-block;
-  transition: transform var(--t-base);
+  box-shadow: 0 3px 12px rgba(0,0,0,.14);
+  transition: background var(--t-fast), color var(--t-fast);
 }
 
 .cta-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 32px rgba(0,0,0,.22);
   background: #f0fdf4;
   color: var(--cv-primary-dark);
 }
-
-.cta-button:hover .cta-arrow { transform: translateX(5px); }
 
 main {
   width: 90%;

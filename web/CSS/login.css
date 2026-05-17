@@ -19,7 +19,6 @@
   box-shadow: var(--s-xl);
   background: #fff;
   border: 1px solid rgba(39,174,96,.1);
-  animation: cv-scale-in 0.3s ease both;
 }
 
 .form-header {
@@ -103,8 +102,7 @@
   font-weight: 800;
   cursor: pointer;
   letter-spacing: 0.4px;
-  box-shadow: 0 4px 16px rgba(39,174,96,.32);
-  transition: filter var(--t-fast), transform var(--t-fast), box-shadow var(--t-fast);
+  transition: filter var(--t-fast);
   margin-top: 4px;
   margin-bottom: 0;
   text-transform: uppercase;
@@ -113,13 +111,6 @@
 .submit-btn:hover,
 .form button[type="submit"]:hover {
   filter: brightness(1.07);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 22px rgba(39,174,96,.40);
-}
-
-.submit-btn:active,
-.form button[type="submit"]:active {
-  transform: translateY(0);
 }
 
 .forgot-link,
