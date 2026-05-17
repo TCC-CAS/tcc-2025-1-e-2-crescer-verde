@@ -270,12 +270,17 @@ footer a {
 
 footer a:hover { color: var(--cv-primary-light); }
 
-#carouselExampleAutoplaying { overflow: hidden; }
+#carouselExampleAutoplaying {
+  overflow: hidden;
+  width: 100%;
+  align-self: stretch;
+}
 
 #carouselExampleAutoplaying .carousel-item img {
   width: 100%;
   height: auto;
   display: block;
+  object-fit: cover;
 }
 
 #carouselExampleAutoplaying .quiz-slide { aspect-ratio: 1841 / 517; }
