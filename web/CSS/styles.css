@@ -270,21 +270,20 @@ footer a {
 
 footer a:hover { color: var(--cv-primary-light); }
 
-#carouselExampleAutoplaying {
-  overflow: hidden;
-  max-width: none !important;
+html, body {
+  overflow-x: hidden;
 }
 
-#carouselExampleAutoplaying .carousel-inner,
-#carouselExampleAutoplaying .carousel-item {
-  max-width: none !important;
-  width: 100% !important;
+#carouselExampleAutoplaying {
+  overflow: hidden;
+  width: 100vw !important;
+  max-width: 100vw !important;
 }
 
 #carouselExampleAutoplaying .carousel-item img {
   display: block;
-  width: 100% !important;
-  height: auto !important;
+  width: 100%;
+  height: auto;
   max-width: none !important;
 }
 
