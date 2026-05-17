@@ -19,8 +19,36 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'admin'],
+    enum: ['user', 'admin', 'guardian'],
     default: 'user',
+  },
+  plan: {
+    type: String,
+    enum: ['free', 'basic', 'premium', 'institutional'],
+    default: 'free',
+  },
+  acceptedTerms: {
+    type: Boolean,
+    default: false,
+  },
+  acceptedTermsAt: {
+    type: Date,
+  },
+  isMinor: {
+    type: Boolean,
+    default: false,
+  },
+  guardianEmail: {
+    type: String,
+    lowercase: true,
+  },
+  guardianOf: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  }],
+  sessionTimeLimitMinutes: {
+    type: Number,
+    default: null,
   },
   resetPasswordToken: {
     type: String,
@@ -29,12 +57,11 @@ const userSchema = new mongoose.Schema({
   resetPasswordExpires: {
     type: Date,
     select: false,
-  }
+  },
 });
 
 userSchema.pre('save', async function () {
   if (!this.isModified('password')) return;
-
   this.password = await bcrypt.hash(this.password, 12);
 });
 

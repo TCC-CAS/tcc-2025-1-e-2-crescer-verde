@@ -15,9 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
                 const response = await fetch(API_BASE + "/api/auth/login", {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email, password })
                 });
 
@@ -27,20 +25,22 @@ document.addEventListener("DOMContentLoaded", () => {
                     localStorage.setItem("token", data.token);
                     localStorage.setItem("user", JSON.stringify(data.user));
 
-                    window.location.href = "/HTML/jogos.html";
+                    if (data.user.role === "guardian") {
+                        window.location.href = "/HTML/painel-parental.html";
+                    } else {
+                        window.location.href = "/HTML/jogos.html";
+                    }
                 } else {
                     errorDiv.textContent = data.message || "Erro ao fazer login. Verifique suas credenciais.";
                     errorDiv.style.display = "block";
                 }
             } catch (error) {
-                console.error("Login error:", error);
                 errorDiv.textContent = "Erro de conexão com o servidor.";
                 errorDiv.style.display = "block";
             }
         });
     }
 
-    // Esqueci minha senha
     const forgotLink = document.getElementById("forgot-password-link");
     if (forgotLink) {
         forgotLink.addEventListener("click", (e) => {
@@ -74,22 +74,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const data = await res.json();
 
-                if (res.ok && data.demo && data.resetLink) {
-                    // Modo demo: exibe o link diretamente na tela
-                    infoDiv.innerHTML =
-                        "Link gerado! Em produ\u00e7\u00e3o, seria enviado ao seu e-mail.<br><br>" +
-                        "<strong>Link de redefini\u00e7\u00e3o (demo):</strong><br>" +
-                        "<a href=\"" + data.resetLink + "\" style=\"color:#1b5e20; word-break:break-all;\">" +
-                        window.location.origin + data.resetLink + "</a>";
-                    infoDiv.style.display = "block";
-                    forgotForm.style.display = "none";
-                } else {
-                    infoDiv.textContent = data.message || "Solicita\u00e7\u00e3o enviada.";
-                    infoDiv.style.display = "block";
-                    forgotForm.style.display = "none";
-                }
+                infoDiv.textContent = data.message || "Solicitação enviada.";
+                infoDiv.style.display = "block";
+                forgotForm.style.display = "none";
             } catch (err) {
-                errDiv.textContent = "Erro de conex\u00e3o com o servidor.";
+                errDiv.textContent = "Erro de conexão com o servidor.";
                 errDiv.style.display = "block";
                 submitBtn.disabled = false;
                 submitBtn.textContent = "Enviar link";

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/Imagens/EarthPNG.png" sizes="16x16" type="image/png" />
+    <title>Painel Parental | CrescerVerde</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/CSS/design-system.css" />
+    <link rel="stylesheet" href="/CSS/styles.css" />
+    <style>
+      .parental-header {
+        background: var(--green-dark, #1b5e20);
+        color: #fff;
+        padding: 28px 24px 20px;
+      }
+      .parental-header h1 {
+        font-family: 'Nunito', sans-serif;
+        font-weight: 900;
+        font-size: clamp(1.4rem, 3vw, 2rem);
+        margin: 0 0 4px;
+      }
+      .parental-header p { color: #a5d6a7; margin: 0; font-size: 0.95rem; }
+
+      .minor-card {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        padding: 22px;
+        margin-bottom: 20px;
+      }
+      .minor-card h4 { font-family: 'Nunito', sans-serif; font-weight: 800; color: #1b5e20; margin: 0 0 4px; }
+      .minor-card .email { font-size: 0.85rem; color: #888; margin: 0 0 16px; }
+
+      .time-slider-wrap label { font-size: 0.85rem; font-weight: 600; color: #555; }
+      .time-display { font-size: 1.1rem; font-weight: 800; color: #1b5e20; min-width: 56px; }
+
+      .eca-info {
+        background: #e8f5e9;
+        border-left: 4px solid #27ae60;
+        border-radius: 8px;
+        padding: 16px 18px;
+        margin-top: 24px;
+        font-size: 0.875rem;
+        color: #2e7d32;
+      }
+      .eca-info strong { display: block; margin-bottom: 6px; font-size: 0.95rem; }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar" id="main-nav">
+      <a href="/index.html" class="navbar-brand">
+        <img src="/Imagens/logo.png" alt="CrescerVerde" />
+      </a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav" id="nav-links">
+        <li class="nav-item">
+          <a class="nav-link" href="/HTML/planos.html"><i class="fas fa-star"></i> Planos</a>
+        </li>
+        <li class="nav-item" id="nav-usuarios-li" style="display:none">
+          <a class="nav-link" href="/HTML/usuarios.html" id="nav-usuarios"><i class="fas fa-users"></i> Usuários</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-btn" href="/HTML/login.html" id="nav-login"><i class="fas fa-sign-in-alt"></i> Sair</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="parental-header">
+      <h1><i class="fas fa-shield-alt" style="margin-right:10px;"></i>Painel Parental</h1>
+      <p>Acompanhe e configure o acesso dos menores vinculados à sua conta</p>
+    </div>
+
+    <main class="container py-4">
+      <div id="parental-loading" class="text-center py-5 text-muted">Carregando...</div>
+      <div id="parental-content" style="display:none">
+        <div id="minors-list"></div>
+
+        <div class="eca-info">
+          <strong><i class="fas fa-balance-scale me-2"></i>ECA Digital — Lei 8.069/90</strong>
+          A plataforma segue a legislação brasileira de proteção a crianças e adolescentes no ambiente digital.
+          Como responsável, você pode definir limites de tempo de uso para cada menor vinculado à sua conta.
+          Crianças menores de 13 anos requerem consentimento parental expresso para uso de serviços digitais.
+        </div>
+      </div>
+      <div id="parental-empty" class="text-center py-5" style="display:none">
+        <div style="font-size:48px;margin-bottom:12px;">👨‍👩‍👧</div>
+        <p class="text-muted">Nenhum menor vinculado à sua conta. Contate o administrador para vincular.</p>
+      </div>
+    </main>
+
+    <div id="success-toast" style="position:fixed;bottom:24px;right:24px;background:#1b5e20;color:#fff;padding:12px 22px;border-radius:12px;z-index:9999;display:none;font-weight:700;"></div>
+
+    <footer>
+      <p>&copy; 2026 Plataforma de Jogos de Sustentabilidade Infantil</p>
+      <p style="font-size: 0.8rem; opacity: 0.65; margin-top: 4px;">
+        <a href="#" data-terms-tab="uso" style="color: #a5d6a7; text-decoration: none;">Termos de Uso</a>
+        &nbsp;&middot;&nbsp;
+        <a href="#" data-terms-tab="privacidade" style="color: #a5d6a7; text-decoration: none;">Pol&iacute;tica de Privacidade</a>
+        &nbsp;&middot;&nbsp;
+        <a href="#" data-terms-tab="acessibilidade" style="color: #a5d6a7; text-decoration: none;">Acessibilidade</a>
+      </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="/JS/config.js"></script>
+    <script src="/JS/global.js"></script>
+    <script src="/JS/auth-sync.js"></script>
+    <script src="/JS/terms-modal.js"></script>
+    <script>
+      const API = (window.API_BASE || "") + "/api";
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        const token = localStorage.getItem("token");
+        const userStr = localStorage.getItem("user");
+        if (!token || !userStr) { window.location.href = "/HTML/login.html"; return; }
+
+        let user;
+        try { user = JSON.parse(userStr); } catch (e) { window.location.href = "/HTML/login.html"; return; }
+        if (user.role !== "guardian" && user.role !== "admin") {
+          window.location.href = "/index.html";
+          return;
+        }
+
+        const headers = { "Content-Type": "application/json", "Authorization": `Bearer ${token}` };
+
+        try {
+          const res = await fetch(`${API}/users/${user.id}/guardian-view`, { headers });
+          const data = await res.json();
+          document.getElementById("parental-loading").style.display = "none";
+
+          if (!res.ok || !data.minors || data.minors.length === 0) {
+            document.getElementById("parental-empty").style.display = "block";
+            return;
+          }
+
+          document.getElementById("parental-content").style.display = "block";
+          const list = document.getElementById("minors-list");
+
+          data.minors.forEach(minor => {
+            const currentLimit = minor.sessionTimeLimitMinutes || 60;
+            const card = document.createElement("div");
+            card.className = "minor-card";
+            card.innerHTML = `
+              <h4><i class="fas fa-child me-2"></i>${minor.name}</h4>
+              <p class="email">${minor.email}</p>
+              <div class="time-slider-wrap d-flex align-items-center gap-3 mb-3">
+                <label>Limite de sessão:</label>
+                <input type="range" min="15" max="180" step="15" value="${currentLimit}"
+                  class="form-range flex-1" id="slider-${minor._id}"
+                  oninput="document.getElementById('display-${minor._id}').textContent = this.value + ' min'">
+                <span class="time-display" id="display-${minor._id}">${currentLimit} min</span>
+              </div>
+              <button class="btn btn-success btn-sm fw-bold px-4" onclick="saveTimeLimit('${minor._id}', '${minor.name}')">
+                <i class="fas fa-save me-1"></i>Salvar Limite
+              </button>
+            `;
+            list.appendChild(card);
+          });
+        } catch (err) {
+          document.getElementById("parental-loading").textContent = "Erro ao carregar dados.";
+        }
+      });
+
+      async function saveTimeLimit(minorId, minorName) {
+        const token = localStorage.getItem("token");
+        const value = parseInt(document.getElementById(`slider-${minorId}`).value, 10);
+        const headers = { "Content-Type": "application/json", "Authorization": `Bearer ${token}` };
+
+        try {
+          const res = await fetch(`${API}/users/${minorId}/time-limit`, {
+            method: "PUT",
+            headers,
+            body: JSON.stringify({ sessionTimeLimitMinutes: value })
+          });
+          if (res.ok) showToast(`Limite de ${value} minutos salvo para ${minorName}.`);
+          else showToast("Erro ao salvar limite.", true);
+        } catch (e) {
+          showToast("Erro de conexão.", true);
+        }
+      }
+
+      function showToast(msg, isError) {
+        const t = document.getElementById("success-toast");
+        t.textContent = msg;
+        t.style.background = isError ? "#c62828" : "#1b5e20";
+        t.style.display = "block";
+        setTimeout(() => { t.style.display = "none"; }, 3000);
+      }
+    </script>
+
+    <!-- VLibras: Acessibilidade em Libras -->
+    <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+      <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+      </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+  </body>
+</html>

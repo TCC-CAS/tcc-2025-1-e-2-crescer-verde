@@ -4,13 +4,18 @@ const CourseProgress = require('../models/CourseProgress');
 const create = async (req, res) => {
   try {
     const { userId, courseId } = req.body;
+
+    if (req.user.role !== 'admin' && req.user.id !== String(userId)) {
+      return res.status(403).json({ message: 'Acesso negado' });
+    }
+
     if (await Certificate.findOne({ user: userId, course: courseId })) {
       return res.status(400).json({ message: 'Certificado já emitido' });
     }
 
     const courseProgress = await CourseProgress.findOne({ userId, courseId });
 
-    if (!courseProgress.isCourseCompleted) {
+    if (!courseProgress || !courseProgress.isCourseCompleted) {
       return res.status(400).json({ message: 'Curso não concluído' });
     }
 
@@ -20,26 +25,28 @@ const create = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-}
+};
 
 const getByUserId = async (req, res) => {
   try {
     const { userId } = req.params;
-    const certificates = await Certificate.find({ user: userId }).lean();
 
-    const response = certificates.map(c => {
-      return {
-        _id: c._id,
-        courseId: c.course,
-        userId: c.user,
-        date: c.date
-      };
-    });
+    if (req.user.role !== 'admin' && req.user.id !== String(userId)) {
+      return res.status(403).json({ message: 'Acesso negado' });
+    }
+
+    const certificates = await Certificate.find({ user: userId }).lean();
+    const response = certificates.map(c => ({
+      _id: c._id,
+      courseId: c.course,
+      userId: c.user,
+      date: c.date,
+    }));
     res.status(200).json(response);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-}
+};
 
 const get = async (req, res) => {
   try {
@@ -47,10 +54,20 @@ const get = async (req, res) => {
     const certificate = await Certificate.findOne({ _id: certificateId })
       .populate('user', 'name')
       .populate('course', 'title');
+
+    if (!certificate) return res.status(404).json({ message: 'Certificado não encontrado' });
+
+    if (
+      req.user.role !== 'admin' &&
+      req.user.id !== String(certificate.user?._id)
+    ) {
+      return res.status(403).json({ message: 'Acesso negado' });
+    }
+
     res.status(200).json(certificate);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-}
+};
 
 module.exports = { create, getByUserId, get };

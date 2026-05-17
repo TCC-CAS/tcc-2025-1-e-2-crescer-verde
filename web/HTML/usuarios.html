@@ -36,6 +36,9 @@
         <li class="nav-item">
           <a class="nav-link" href="/HTML/certificados.html"><i class="fas fa-certificate"></i> Certificados</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/HTML/planos.html"><i class="fas fa-star"></i> Planos</a>
+        </li>
         <li class="nav-item" id="nav-usuarios-li" style="display:none">
           <a class="nav-link" href="/HTML/usuarios.html" id="nav-usuarios"><i class="fas fa-users"></i> Usuários</a>
         </li>
@@ -60,6 +63,7 @@
             <option value="all">Todos (Cargos)</option>
             <option value="admin">Administrador</option>
             <option value="user">Usuário Padrão</option>
+            <option value="guardian">Responsável</option>
           </select>
           <button
             class="btn btn-light shadow-sm fw-bold text-success"
@@ -110,6 +114,7 @@
       </div>
     </main>
 
+    <!-- Create / Edit User Modal -->
     <div
       class="modal fade"
       id="userModal"
@@ -135,40 +140,17 @@
               <input type="hidden" id="user-id" />
 
               <div class="mb-3">
-                <label
-                  for="user-name"
-                  class="form-label fw-semibold text-muted small"
-                  >Nome Completo</label
-                >
-                <input
-                  type="text"
-                  class="form-control form-control-lg bg-light"
-                  id="user-name"
-                  required
-                />
+                <label for="user-name" class="form-label fw-semibold text-muted small">Nome Completo</label>
+                <input type="text" class="form-control form-control-lg bg-light" id="user-name" required />
               </div>
 
               <div class="mb-3">
-                <label
-                  for="user-email"
-                  class="form-label fw-semibold text-muted small"
-                  >E-mail</label
-                >
-                <input
-                  type="email"
-                  class="form-control form-control-lg bg-light"
-                  id="user-email"
-                  required
-                />
+                <label for="user-email" class="form-label fw-semibold text-muted small">E-mail</label>
+                <input type="email" class="form-control form-control-lg bg-light" id="user-email" required />
               </div>
 
               <div class="mb-3" id="password-container">
-                <label
-                  for="user-password"
-                  class="form-label fw-semibold text-muted small"
-                  id="password-label"
-                  >Senha</label
-                >
+                <label for="user-password" class="form-label fw-semibold text-muted small" id="password-label">Senha</label>
                 <input
                   type="text"
                   class="form-control form-control-lg bg-light text-success fw-bold font-monospace"
@@ -182,27 +164,46 @@
                 </div>
               </div>
 
-              <div class="mb-4">
-                <label
-                  for="user-role"
-                  class="form-label fw-semibold text-muted small"
-                  >Cargo</label
-                >
-                <select
-                  class="form-select form-select-lg bg-light"
-                  id="user-role"
-                  required
-                >
+              <div class="mb-3">
+                <label for="user-role" class="form-label fw-semibold text-muted small">Cargo</label>
+                <select class="form-select form-select-lg bg-light" id="user-role" required onchange="onRoleChange()">
                   <option value="user">Usuário Padrão</option>
                   <option value="admin">Administrador (Admin)</option>
+                  <option value="guardian">Responsável (Parental)</option>
                 </select>
               </div>
 
+              <div class="mb-3" id="plan-container">
+                <label for="user-plan" class="form-label fw-semibold text-muted small">Plano</label>
+                <select class="form-select form-select-lg bg-light" id="user-plan">
+                  <option value="free">Gratuito</option>
+                  <option value="basic">Básico</option>
+                  <option value="premium">Premium</option>
+                  <option value="institutional">Institucional</option>
+                </select>
+              </div>
+
+              <div class="mb-3 form-check" id="minor-container">
+                <input type="checkbox" class="form-check-input" id="user-is-minor">
+                <label class="form-check-label fw-semibold text-muted small" for="user-is-minor">Usuário menor de idade</label>
+              </div>
+
+              <div class="mb-3" id="guardian-email-container" style="display:none">
+                <label for="user-guardian-email" class="form-label fw-semibold text-muted small">E-mail do Responsável</label>
+                <input type="email" class="form-control bg-light" id="user-guardian-email" placeholder="responsavel@email.com" />
+              </div>
+
+              <!-- Aceite de termos (somente no cadastro) -->
+              <div class="mb-3 form-check" id="terms-check-container">
+                <input type="checkbox" class="form-check-input" id="accept-terms-check" required>
+                <label class="form-check-label small" for="accept-terms-check">
+                  Li e aceito os <a href="#" data-terms-tab="uso" class="text-success">Termos de Uso</a>
+                  e a <a href="#" data-terms-tab="privacidade" class="text-success">Política de Privacidade</a>
+                </label>
+              </div>
+
               <div class="d-grid gap-2">
-                <button
-                  type="submit"
-                  class="btn btn-success btn-lg shadow-sm w-100 fw-bold"
-                >
+                <button type="submit" class="btn btn-success btn-lg shadow-sm w-100 fw-bold">
                   Salvar
                 </button>
               </div>
@@ -212,6 +213,7 @@
       </div>
     </div>
 
+    <!-- Delete Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered">
         <div class="modal-content border-0 rounded-4 shadow">
@@ -224,53 +226,30 @@
               desfeita.
             </p>
             <div class="d-flex gap-2 justify-content-center">
-              <button
-                type="button"
-                class="btn btn-light px-4"
-                data-bs-dismiss="modal"
-              >
-                Cancelar
-              </button>
-              <button
-                type="button"
-                class="btn btn-danger px-4 shadow-sm"
-                id="confirm-delete-btn"
-              >
-                Excluir
-              </button>
+              <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-danger px-4 shadow-sm" id="confirm-delete-btn">Excluir</button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Password Modal -->
+    <!-- Password Created Modal -->
     <div class="modal fade" id="passwordModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 rounded-4 shadow">
-          <div
-            class="modal-header border-bottom-0 bg-success bg-opacity-10 rounded-top-4"
-          >
+          <div class="modal-header border-bottom-0 bg-success bg-opacity-10 rounded-top-4">
             <h5 class="modal-title fw-bold text-success">
-              <i class="bi bi-check-circle-fill me-2"></i>Usuário Criado com
-              Sucesso!
+              <i class="bi bi-check-circle-fill me-2"></i>Usuário Criado com Sucesso!
             </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body p-4 text-center">
-            <p class="text-muted mb-4">
-              Por favor, copie a senha temporária abaixo e envie para o novo
-              usuário. Por motivos de segurança, ela não será exibida novamente.
+            <p class="text-muted mb-3">
+              Copie a senha temporária abaixo e envie para o novo usuário.
             </p>
 
-            <div
-              class="input-group mb-3 text-center d-flex justify-content-center"
-            >
+            <div class="input-group mb-3 d-flex justify-content-center">
               <input
                 type="text"
                 id="generatedPasswordDisplay"
@@ -279,12 +258,50 @@
               />
             </div>
 
-            <button
-              id="copyPasswordBtn"
-              class="btn btn-success btn-lg shadow-sm w-100 fw-bold"
-            >
+            <button id="copyPasswordBtn" class="btn btn-success btn-lg shadow-sm w-100 fw-bold mb-3">
               <i class="bi bi-copy me-2"></i>Copiar Senha
             </button>
+
+            <hr class="my-2">
+            <p class="text-muted small mb-2">Quer definir uma senha personalizada agora?</p>
+            <button
+              type="button"
+              class="btn btn-outline-success w-100 fw-semibold"
+              id="openChangePasswordBtn"
+            >
+              <i class="bi bi-key-fill me-2"></i>Trocar Senha
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content border-0 rounded-4 shadow">
+          <div class="modal-header border-bottom-0 bg-light rounded-top-4">
+            <h5 class="modal-title fw-bold text-success">
+              <i class="bi bi-key-fill me-2"></i>Trocar Senha
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-4">
+            <form id="change-password-form">
+              <input type="hidden" id="change-password-user-id" />
+              <div class="mb-3">
+                <label for="new-password" class="form-label fw-semibold text-muted small">Nova Senha</label>
+                <input type="password" class="form-control form-control-lg bg-light" id="new-password" minlength="6" required placeholder="Mínimo 6 caracteres" />
+              </div>
+              <div class="mb-3">
+                <label for="confirm-new-password" class="form-label fw-semibold text-muted small">Confirmar Senha</label>
+                <input type="password" class="form-control form-control-lg bg-light" id="confirm-new-password" minlength="6" required placeholder="Repita a senha" />
+              </div>
+              <div id="change-password-error" class="alert alert-danger py-2 small" style="display:none"></div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-success btn-lg fw-bold">Salvar Nova Senha</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
