@@ -22,3 +22,8 @@ build/
 .cache/
 .parcel-cache/
 *.tsbuildinfo
+
+# Docs / TCC
+*.pdf
+*.docx
+*.doc
