@@ -276,16 +276,20 @@ html, body {
 
 #carouselExampleAutoplaying {
   overflow: hidden;
-  width: 100vw !important;
-  max-width: 100vw !important;
+  width: 100%;
+  align-self: stretch;
 }
 
 #carouselExampleAutoplaying .carousel-item img {
   display: block;
   width: 100%;
   height: auto;
-  max-width: none !important;
 }
+
+/* Fill transparent PNG edges with the correct background per slide */
+#carouselExampleAutoplaying .carousel-item:nth-child(1) { background-color: #27ae60; }
+#carouselExampleAutoplaying .carousel-item:nth-child(2) { background-color: #0b1a0b; }
+#carouselExampleAutoplaying .carousel-item:nth-child(3) { background-color: #2a5420; }
 
 #carouselExampleAutoplaying .quiz-slide { aspect-ratio: 1841 / 517; }
 #carouselExampleAutoplaying .quiz-slide > div { height: 100%; width: 100%; }
