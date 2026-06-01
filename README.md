@@ -3,7 +3,6 @@
 Plataforma web educativa com jogos interativos voltados a crianças e jovens, focada em escolas e famílias. Responsáveis e escolas gerenciam o acesso; alunos aprendem de forma lúdica sobre sustentabilidade, reciclagem e meio ambiente.
 
 **🌐 Acesso:** [crescerverde.vercel.app](https://crescerverde.vercel.app/)
-**📧 Contato:** [contato@crescerverde.com](mailto:contato@crescerverde.com)
 
 ---
 
