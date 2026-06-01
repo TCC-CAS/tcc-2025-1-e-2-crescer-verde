@@ -120,10 +120,56 @@ node seed.js
 
 ---
 
-## Deploy
+## Deployment (Implantação)
 
-O projeto é deployado automaticamente na Vercel a cada push na branch `master`.
+### Ambientes de Produção
 
-- **Frontend:** servido como site estático
-- **API:** funções serverless via `vercel.json`
-- **Banco:** MongoDB Atlas (permitir IPs: `0.0.0.0/0` em Network Access)
+| Serviço | URL | Plataforma |
+|---|---|---|
+| Frontend | [crescerverde.vercel.app](https://crescerverde.vercel.app) | Vercel (estático) |
+| API REST | [crescer-verde-app.vercel.app](https://crescer-verde-app.vercel.app) | Vercel (serverless) |
+| Banco de Dados | MongoDB Atlas — Cluster0 | MongoDB Atlas (nuvem) |
+
+### Deploy Automático (CI/CD)
+
+O projeto utiliza deploy contínuo via **Vercel**. A cada push na branch `master`, o Vercel detecta a alteração e realiza o deploy automaticamente, sem necessidade de intervenção manual.
+
+- Frontend e API possuem projetos separados na Vercel, cada um com seu próprio `vercel.json`
+- O banco de dados (MongoDB Atlas) é compartilhado entre os ambientes
+
+### Variáveis de Ambiente (Produção)
+
+As variáveis abaixo devem ser configuradas no painel da Vercel (Settings → Environment Variables) no projeto da API:
+
+| Variável | Descrição |
+|---|---|
+| `MONGO_URI` | String de conexão do MongoDB Atlas |
+| `JWT_SECRET` | Chave secreta para assinatura dos tokens JWT |
+| `NODE_ENV` | Deve ser `production` |
+
+### Configuração do MongoDB Atlas
+
+1. Acesse [cloud.mongodb.com](https://cloud.mongodb.com)
+2. Em **Network Access**, adicione `0.0.0.0/0` para permitir conexões da Vercel
+3. Copie a connection string e configure em `MONGO_URI`
+4. Execute o seed para popular as trilhas iniciais:
+
+```bash
+cd api
+node seed-full.js
+```
+
+### Deploy Manual (passo a passo)
+
+```bash
+# 1. Instalar Vercel CLI
+npm i -g vercel
+
+# 2. Deploy da API
+cd api
+vercel --prod
+
+# 3. Deploy do Frontend
+cd ../web
+vercel --prod
+```
